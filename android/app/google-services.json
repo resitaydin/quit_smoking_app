@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "7117492319",
+    "firebase_url": "https://quit-smoking-app-bfb60-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "quit-smoking-app-bfb60",
+    "storage_bucket": "quit-smoking-app-bfb60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7117492319:android:41caaad229a8d84891cbea",
+        "android_client_info": {
+          "package_name": "com.example.loginui"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd7g5pfl_YmGvbMkXvkwxFNUfoVvS_02I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7117492319:android:1198eab4a936f26691cbea",
+        "android_client_info": {
+          "package_name": "com.example.quit_smoking_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd7g5pfl_YmGvbMkXvkwxFNUfoVvS_02I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
