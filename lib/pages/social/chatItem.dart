@@ -1,16 +1,19 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class Post {
-  String user_id = "";
-  int post_id = -1;
-  String content = '';
-  int parental_id = -1;
+  String user_id;
+  String content;
+  String parental_id;
+  String? uid = "";
+  DateTime created_at;
 
   Post(
       {required this.user_id,
-      required this.post_id,
       required this.content,
-      required this.parental_id}) {
-    debugPrint('Post: $user_id, $post_id, $content, $parental_id');
-  }
+      required this.parental_id,
+      required this.created_at,
+      this.uid})
+      {
+        debugPrint("user_id: $user_id" + "content: $content" + "parental_id: $parental_id" + "created_at: $created_at" + "uid: $uid");
+      }
 }

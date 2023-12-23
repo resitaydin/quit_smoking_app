@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loginui/pages/health/UnsmokedGrid.dart';
 import 'package:loginui/pages/health_ach/AchievementList.dart';
 import 'package:loginui/pages/home/MainPage.dart';
+import 'package:loginui/pages/settings/settings_page.dart';
 import 'package:loginui/pages/social/post_screen.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -18,6 +19,7 @@ class _NavigatorBarPageState extends State<NavigatorBarPage> {
     MainPage(),
     AchievementList(),
     UnsmokedGrid(),
+    SettingsPage(),
     PostScreen(),
   ];
 
@@ -50,7 +52,11 @@ class _NavigatorBarPageState extends State<NavigatorBarPage> {
               label: 'Achievements',
               icon: Icon(MdiIcons.trophy),
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
+              label: 'Settings',
+              icon: Icon(Icons.settings),
+            ),
+            const BottomNavigationBarItem(
               label: 'Community',
               icon: Icon(Icons.message),
             ),
