@@ -24,28 +24,13 @@ class SettingsPage extends StatelessWidget {
                 width: double.infinity, // This will make the button full width
                 height: 50, // Specify the height of the button
                 child: ElevatedButton.icon(
-                  icon: Icon(Icons.logout),
-                  label: Text('Log Out'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 235, 104, 95), // change the color to match your theme
-                  ),
-                  onPressed: () {
-                    _auth.signOut();
-                  },
-                ),
-              ),
-              const SizedBox(height: 15),
-              Container(
-                width: double.infinity, // This will make the button full width
-                height: 50, // Specify the height of the button
-                child: ElevatedButton.icon(
                   icon: Icon(Icons.update),
                   label: Text('Update User Information'),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const UserInfoPage(),
+                        builder: (context) => UserInfoPage.update(uid: LocalStorageService().getUid()),
                       ),
                     );
                   },
@@ -81,6 +66,21 @@ class SettingsPage extends StatelessWidget {
                         );
                       },
                     );
+                  },
+                ),
+              ),
+              const SizedBox(height: 15),
+              Container(
+                width: double.infinity, // This will make the button full width
+                height: 50, // Specify the height of the button
+                child: ElevatedButton.icon(
+                  icon: Icon(Icons.logout),
+                  label: Text('Log Out'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 235, 104, 95), // change the color to match your theme
+                  ),
+                  onPressed: () {
+                    _auth.signOut();
                   },
                 ),
               ),

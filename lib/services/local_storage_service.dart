@@ -40,6 +40,22 @@ class LocalStorageService {
     };
   }
 
+  int getCigaratteDailySmoked() {
+    return _dbService.cigaratte_daily_smoked;
+  }
+
+  int getCigaratteAmountPerPack() {
+    return _dbService.cigaratte_amount_per_pack;
+  }
+
+  int getPricePerPack() {
+    return _dbService.price_per_pack;
+  }
+
+  DateTime getLastDateSmoked() {
+    return _dbService.last_date_smoked;
+  }
+
   String getUid() {
     return user!.uid;
   }

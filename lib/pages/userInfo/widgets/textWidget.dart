@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Widget textWidget(
-    String title, TextEditingController controller, Function validator,
-    {Function? onTap, bool readOnly = false}) {
+String title, TextEditingController controller, Function validator,
+    {Function? onTap, bool readOnly = false, String? defaultValue = ''}) {
+  controller.text = defaultValue ?? '';
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [

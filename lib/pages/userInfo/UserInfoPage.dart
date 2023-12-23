@@ -9,9 +9,13 @@ import 'package:loginui/pages/home/navigatorBarPage.dart';
 import 'package:loginui/pages/userInfo/widgets/greenIntroWidget.dart';
 import 'package:loginui/pages/userInfo/widgets/textWidget.dart';
 import 'package:loginui/services/database.dart';
+import 'package:loginui/services/local_storage_service.dart';
 
 class UserInfoPage extends StatefulWidget {
-  const UserInfoPage({Key? key}) : super(key: key);
+  final String? uid;
+
+  const UserInfoPage({Key? key, this.uid}) : super(key: key);
+  const UserInfoPage.update({Key? key, required this.uid}) : super(key: key);
 
   @override
   State<UserInfoPage> createState() => _UserInfoPageState();
@@ -37,6 +41,16 @@ class _UserInfoPageState extends State<UserInfoPage> {
     super.initState();
     dateController = TextEditingController();
     timeController = TextEditingController();
+    if (widget.uid != null) {
+      dateController.text = LocalStorageService()
+          .getLastDateSmoked()
+          .toString()
+          .substring(0, 10);
+      timeController.text = LocalStorageService()
+          .getLastDateSmoked()
+          .toString()
+          .substring(11, 16);
+    }
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -98,6 +112,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: widget.uid != null ? BackButton() : null,
+        ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -129,7 +146,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       }
 
                       return null;
-                    }),
+                    }, defaultValue: widget.uid != null ? LocalStorageService().getCigaratteAmountPerPack().toString() : null),
                     const SizedBox(
                       height: 10,
                     ),
@@ -143,7 +160,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       }
 
                       return null;
-                    }),
+                    }, defaultValue: widget.uid != null ? LocalStorageService().getCigaratteDailySmoked().toString() : null),
                     const SizedBox(
                       height: 10,
                     ),
@@ -157,7 +174,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       }
 
                       return null;
-                    }),
+                    }, defaultValue: widget.uid != null ? LocalStorageService().getPricePerPack().toString() : null),
 
                     const SizedBox(
                       height: 20,
