@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:loginui/pages/UiComponentScripts/UiButton.dart';
 import 'package:loginui/pages/UiComponentScripts/UiTextField.dart';
 import 'package:loginui/services/auth.dart';
-import 'package:loginui/services/local_storage_service.dart';
 import 'package:loginui/shared/loading.dart';
 
 class UserRegisterPage extends StatefulWidget {
