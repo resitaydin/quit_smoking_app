@@ -161,7 +161,7 @@ class _MainPageState extends State<MainPage> {
                           time: '$current_smoke_amount',
                           header: 'Smoke Amount'),
                       // Widget 2
-                      infoCard(time: '₺$savedMoney', header: 'Saved Money'),
+                      infoCard(time: '₺${savedMoney.toInt()}', header: 'Saved Money'),
                       // Widget 3
                       infoCard(
                           time: '  ${myDuration.inDays}  ',
@@ -198,7 +198,7 @@ class _MainPageState extends State<MainPage> {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                fontSize: 60,
+                fontSize: 40,
               ),
             ),
           ),
@@ -261,7 +261,7 @@ class _MainPageState extends State<MainPage> {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                fontSize: 60,
+                fontSize: 35,
               ),
             ),
           ),
