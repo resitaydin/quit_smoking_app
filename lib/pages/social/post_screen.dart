@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loginui/services/local_storage_service.dart';
@@ -16,7 +15,7 @@ class _PostScreenState extends State<PostScreen> {
   QuerySnapshot<Map<String, dynamic>>? ref;
   List<Post> posts = [];
   List<Post> comments = [];
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -28,7 +27,7 @@ class _PostScreenState extends State<PostScreen> {
     final ref = await FirebaseFirestore.instance.collection('posts').get();
     this.ref = ref;
     final docs = ref.docs;
-    docs.forEach((element) {
+    for (var element in docs) {
       if (element.data()['parental_id'] == "") {
         final data = element.data();
         final post = Post(
@@ -52,9 +51,9 @@ class _PostScreenState extends State<PostScreen> {
         );
         comments.add(post);
       }
-    });
+    }
 
-    posts.sort((a, b) => a.created_at!.compareTo(b.created_at!));
+    posts.sort((a, b) => a.created_at.compareTo(b.created_at));
     // wait .5 seconds for the scroll controller to initialize
     Future.delayed(const Duration(milliseconds: 500), () {
       _scrollController.animateTo(
@@ -116,10 +115,10 @@ class _PostScreenState extends State<PostScreen> {
                       controller: _scrollController,
                       itemBuilder: (context, index) {
                         return Card(  
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          shadowColor: Color.fromARGB(255, 0, 0, 0),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          shadowColor: const Color.fromARGB(255, 0, 0, 0),
                           elevation: 3,
-                          surfaceTintColor: Color.fromARGB(255, 255, 255, 255),
+                          surfaceTintColor: const Color.fromARGB(255, 255, 255, 255),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
@@ -204,7 +203,7 @@ class _CommentScreenState extends State<CommentScreen> {
     final ref = await FirebaseFirestore.instance.collection('posts').get();
     this.ref = ref;
     final docs = ref.docs;
-    docs.forEach((element) {
+    for (var element in docs) {
       if (element.data()['parental_id'] == widget.post.uid) {
         final data = element.data();
         final post = Post(
@@ -216,9 +215,9 @@ class _CommentScreenState extends State<CommentScreen> {
         );
         comments.add(post);
       }
-    });
+    }
 
-    comments.sort((a, b) => a.created_at!.compareTo(b.created_at!));
+    comments.sort((a, b) => a.created_at.compareTo(b.created_at));
   }
 
   void addComment(String value) {
@@ -286,10 +285,10 @@ class _CommentScreenState extends State<CommentScreen> {
                       itemCount: comments.length,
                       itemBuilder: (context, index) {
                         return Card(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          shadowColor: Color.fromARGB(255, 0, 0, 0),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          shadowColor: const Color.fromARGB(255, 0, 0, 0),
                           elevation: 3,
-                          surfaceTintColor: Color.fromARGB(255, 255, 255, 255),
+                          surfaceTintColor: const Color.fromARGB(255, 255, 255, 255),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),

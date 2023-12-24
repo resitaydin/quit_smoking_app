@@ -35,9 +35,9 @@ class MyApp extends StatelessWidget {
               return const Authenticate();
             } else {
               if (AuthService.isSignUp) {
-                return UserInfoPage();
+                return const UserInfoPage();
               } else {
-                return NavigatorBarPage();
+                return const NavigatorBarPage();
               }
             }
           },

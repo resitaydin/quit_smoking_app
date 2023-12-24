@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:loginui/pages/UiComponentScripts/UiButton.dart';
-import 'package:loginui/pages/home/MainPage.dart';
 import 'package:loginui/pages/home/navigatorBarPage.dart';
 import 'package:loginui/pages/userInfo/widgets/greenIntroWidget.dart';
 import 'package:loginui/pages/userInfo/widgets/textWidget.dart';
@@ -106,14 +105,14 @@ class _UserInfoPageState extends State<UserInfoPage> {
     }
 
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => NavigatorBarPage()));
+        MaterialPageRoute(builder: (context) => const NavigatorBarPage()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: widget.uid != null ? BackButton() : null,
+        leading: widget.uid != null ? const BackButton() : null,
         ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -194,12 +193,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                               Expanded(
                                 child: TextFormField(
                                   controller: dateController,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18.0,
                                     color: Colors
                                         .green, // Customize the text color
                                   ),
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     contentPadding:
                                         EdgeInsets.symmetric(horizontal: 16.0),
                                     hintText: 'Select Date',
@@ -207,8 +206,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: Icon(
                                   Icons
                                       .calendar_today, // You can use any date-related icon
@@ -241,12 +240,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                               Expanded(
                                 child: TextFormField(
                                   controller: timeController,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18.0,
                                     color: Colors
                                         .green, // Customize the text color
                                   ),
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     contentPadding:
                                         EdgeInsets.symmetric(horizontal: 16.0),
                                     hintText: 'Select Time',
@@ -254,8 +253,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: Icon(
                                   Icons
                                       .access_time, // You can use any time-related icon

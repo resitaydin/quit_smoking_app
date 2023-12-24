@@ -46,7 +46,7 @@ class AchievementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double totalMins = 1444; //TODO: Fetch the totalMins from Local Data
+    const double totalMins = 1444; //TODO: Fetch the totalMins from Local Data
 
     final times = {
       totalMins / 20, //20 dakika

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginui/pages/UiComponentScripts/UiButton.dart';
 import 'package:loginui/pages/UiComponentScripts/UiTextField.dart';
-import 'package:loginui/pages/home/navigatorBarPage.dart';
 import 'package:loginui/services/auth.dart';
 import 'package:loginui/services/local_storage_service.dart';
 import 'package:loginui/shared/loading.dart';
@@ -121,7 +120,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
           color: Colors.green,
           size: 100,
         ),
-        SizedBox(
+        const SizedBox(
           width: 8.0,
         ),
         Text(
@@ -135,7 +134,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             shadows: [
               Shadow(
                 color: Colors.black.withOpacity(0.5),
-                offset: Offset(2, 2),
+                offset: const Offset(2, 2),
                 blurRadius: 4,
               ),
             ],
@@ -193,8 +192,8 @@ class _UserLoginPageState extends State<UserLoginPage> {
   }
 
   Widget _buildForgotPassword() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -208,8 +207,8 @@ class _UserLoginPageState extends State<UserLoginPage> {
   }
 
   Widget _buildDividerAndSignUp() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 14.0),
       child: Row(
         children: [
           Expanded(
@@ -219,7 +218,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: Text(
               'If you are new, join us with your mail',
               style: TextStyle(color: Colors.green),

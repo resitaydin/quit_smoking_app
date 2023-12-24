@@ -13,7 +13,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
 
   DateTime lastDateSmoked = DateTime.now();
   int cigaratte_daily_smoked = 0;
@@ -23,17 +23,18 @@ class _MainPageState extends State<MainPage> {
   int current_smoke_amount = 0;
 
   Timer? countUppTimer;
-  Duration myDuration = Duration();
+  Duration myDuration = const Duration();
   double savedMoney = 0.0;
   int total_seconds = 0;
 
+  @override
   void initState() {
     super.initState();
-    final Future<FirebaseApp> _fApp = Firebase.initializeApp(
+    final Future<FirebaseApp> fApp = Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    _fApp.then((_) {
+    fApp.then((_) {
       LocalStorageService().setData().then((_) {
         LocalStorageService().getData().then((data) {
           setState(() {
@@ -55,10 +56,10 @@ class _MainPageState extends State<MainPage> {
   }
 
   double calculateSavedMoney() {
-    int cigarattes_not_smoked =
+    int cigarattesNotSmoked =
         calculateSmokeAmount(); // number of cigarattes not smoked
-    double price_per_cigaratte = price_per_pack / cigaratte_amount_per_pack;
-    return price_per_cigaratte * cigarattes_not_smoked; // return saved money
+    double pricePerCigaratte = price_per_pack / cigaratte_amount_per_pack;
+    return pricePerCigaratte * cigarattesNotSmoked; // return saved money
   }
 
   int calculateSmokeAmount() {
@@ -67,7 +68,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void startTimer() {
-    countUppTimer = Timer.periodic(Duration(seconds: 1), (_) => setCountUpp());
+    countUppTimer = Timer.periodic(const Duration(seconds: 1), (_) => setCountUpp());
   }
 
   @override
@@ -78,7 +79,7 @@ class _MainPageState extends State<MainPage> {
 
   // Step 6
   void setCountUpp() {
-    final incrementSecondsBy = 1;
+    const incrementSecondsBy = 1;
     if (mounted) {
       // Check if the widget is still in the tree
       setState(() {
@@ -95,7 +96,7 @@ class _MainPageState extends State<MainPage> {
       home: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: Text('Main Page'),
+          title: const Text('Main Page'),
           centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(
@@ -111,13 +112,13 @@ class _MainPageState extends State<MainPage> {
           ),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.logout),
+              icon: const Icon(Icons.logout),
               onPressed: () {
                 _auth.signOut();
               },
             ),
           ],
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(30),
             ),
@@ -128,12 +129,12 @@ class _MainPageState extends State<MainPage> {
           child: Column(
             children: [
               buildTime(), // Time part
-              SizedBox(
+              const SizedBox(
                   height:
                       20), // Leave some space between the time and the widgets
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: Colors.grey[400],
                     borderRadius: BorderRadius.circular(40),
@@ -142,7 +143,7 @@ class _MainPageState extends State<MainPage> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
@@ -183,7 +184,7 @@ class _MainPageState extends State<MainPage> {
   Widget infoCard({required String time, required String header}) => Column(
         children: [
           Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.green,
               borderRadius: BorderRadius.circular(20),
@@ -194,7 +195,7 @@ class _MainPageState extends State<MainPage> {
             ),
             child: Text(
               time,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
                 fontSize: 60,
@@ -214,7 +215,7 @@ class _MainPageState extends State<MainPage> {
     final seconds = strDigits(myDuration.inSeconds.remainder(60));
 
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey[400],
         borderRadius: BorderRadius.circular(40),
@@ -223,7 +224,7 @@ class _MainPageState extends State<MainPage> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -246,7 +247,7 @@ class _MainPageState extends State<MainPage> {
       Column(
         children: [
           Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.green,
               borderRadius: BorderRadius.circular(20),
@@ -257,7 +258,7 @@ class _MainPageState extends State<MainPage> {
             ),
             child: Text(
               time,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
                 fontSize: 60,
