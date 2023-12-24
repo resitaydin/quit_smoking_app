@@ -27,7 +27,7 @@ class SettingsPage extends StatelessWidget {
                 height: 50, // Specify the height of the button
                 child: ElevatedButton.icon(
                   icon: const Icon(Icons.update),
-                  label: const Text('Update User Information'),
+                  label: const Text('Update My Information'),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -44,7 +44,7 @@ class SettingsPage extends StatelessWidget {
                 height: 50, // Specify the height of the button
                 child: ElevatedButton.icon(
                   icon: const Icon(Icons.refresh),
-                  label: const Text('I Smoked Again'),
+                  label: const Text('I Smoked, Restart Again'),
                   onPressed: () {
                     FirebaseFirestore.instance
                           .collection('user-details')

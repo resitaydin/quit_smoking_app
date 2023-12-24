@@ -53,7 +53,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
             loading = false,
           });
     } else {
-      LocalStorageService().setData();
+      // intentionally left blank.
     }
   }
 

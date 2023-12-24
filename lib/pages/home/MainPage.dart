@@ -36,12 +36,11 @@ class _MainPageState extends State<MainPage> {
 
     fApp.then((_) {
       LocalStorageService().setData().then((_) {
-        LocalStorageService().getData().then((data) {
           setState(() {
-            lastDateSmoked = (data['last_date_smoked'] ?? '');
-            cigaratte_daily_smoked = data['cigaratte_daily_smoked'] ?? 0;
-            cigaratte_amount_per_pack = data['cigaratte_amount_per_pack'] ?? 0;
-            price_per_pack = data['price_per_pack'] ?? 0;
+            lastDateSmoked = LocalStorageService().getLastDateSmoked();
+            cigaratte_daily_smoked = LocalStorageService().getCigaratteDailySmoked();
+            cigaratte_amount_per_pack = LocalStorageService().getCigaratteAmountPerPack();
+            price_per_pack = LocalStorageService().getPricePerPack();
 
             Duration difference = DateTime.now().difference(lastDateSmoked);
             total_seconds = difference.inSeconds;
@@ -50,7 +49,6 @@ class _MainPageState extends State<MainPage> {
           current_smoke_amount = calculateSmokeAmount();
           savedMoney = calculateSavedMoney();
           startTimer();
-        });
       });
     });
   }

@@ -66,6 +66,7 @@ class _PostScreenState extends State<PostScreen> {
 
   void addPost(String value) {
     String userId = LocalStorageService().getUid();
+    print(userId);
     String parentalId = "";
     final post = Post(
       user_id: userId,

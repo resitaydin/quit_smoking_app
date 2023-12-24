@@ -41,10 +41,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
     dateController = TextEditingController();
     timeController = TextEditingController();
     if (widget.uid != null) {
-      dateController.text = LocalStorageService()
-          .getLastDateSmoked()
-          .toString()
-          .substring(0, 10);
+      dateController.text = DateFormat('dd MM yyyy').format(
+      LocalStorageService().getLastDateSmoked(), // Fixed formatting error by updating here.
+      );
       timeController.text = LocalStorageService()
           .getLastDateSmoked()
           .toString()
@@ -257,7 +256,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                 padding: EdgeInsets.all(8.0),
                                 child: Icon(
                                   Icons
-                                      .access_time, // You can use any time-related icon
+                                      .access_time,
                                   color:
                                       Colors.green, // Customize the icon color
                                 ),

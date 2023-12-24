@@ -13,6 +13,6 @@ class Post {
       required this.created_at,
       this.uid})
       {
-        // debugPrint("user_id: $user_idcontent: $contentparental_id: $parental_idcreated_at: $created_atuid: $uid");
+        // Intentionally left blank.
       }
 }
