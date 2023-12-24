@@ -4,8 +4,7 @@ class UiButton extends StatelessWidget {
   final String buttonName;
   final VoidCallback onTap;
 
-  const UiButton({Key? key, required this.buttonName, required this.onTap})
-      : super(key: key);
+  const UiButton({super.key, required this.buttonName, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

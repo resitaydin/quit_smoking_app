@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UnsmokedGrid extends StatefulWidget {
-  const UnsmokedGrid({Key? key}) : super(key: key);
+  const UnsmokedGrid({super.key});
 
   @override
   State<UnsmokedGrid> createState() => UnsmokedGrigState();

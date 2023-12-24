@@ -13,8 +13,8 @@ import 'package:loginui/services/local_storage_service.dart';
 class UserInfoPage extends StatefulWidget {
   final String? uid;
 
-  const UserInfoPage({Key? key, this.uid}) : super(key: key);
-  const UserInfoPage.update({Key? key, required this.uid}) : super(key: key);
+  const UserInfoPage({super.key, this.uid});
+  const UserInfoPage.update({super.key, required this.uid});
 
   @override
   State<UserInfoPage> createState() => _UserInfoPageState();

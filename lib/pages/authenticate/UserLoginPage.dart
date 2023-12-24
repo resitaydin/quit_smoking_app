@@ -8,7 +8,7 @@ import 'package:loginui/shared/loading.dart';
 class UserLoginPage extends StatefulWidget {
   final Function toggleView;
 
-  const UserLoginPage({Key? key, required this.toggleView}) : super(key: key);
+  const UserLoginPage({super.key, required this.toggleView});
 
   @override
   _UserLoginPageState createState() => _UserLoginPageState();
