@@ -4,7 +4,8 @@ class UiButton extends StatelessWidget {
   final String buttonName;
   final VoidCallback onTap;
 
-  const UiButton({super.key, required this.buttonName, required this.onTap});
+  const UiButton({Key? key, required this.buttonName, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class UiButton extends StatelessWidget {
         child: Center(
           child: Text(
             buttonName,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 16,

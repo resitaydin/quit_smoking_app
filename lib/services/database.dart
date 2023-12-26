@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:loginui/models/user.dart';
 
 class DatabaseService {
   // user id from firebase (taken on sign-in/register)
@@ -19,29 +20,29 @@ class DatabaseService {
 
   // called when a new user signs up (register) to create user
   // also called when updating any user fields
-  Future updateUserData(int cigAmount, int cigDailySmoked, String email,
-      String lastDate, int price, int userId, String username) async {
+  Future updateUserData(int cig_amount, int cig_daily_smoked, String email,
+      String last_date, int price, int user_id, String username) async {
     // set fields in this users document
     return await usersCollection.doc(uid).set({
-      'cigaratte_amount_per_pack': cigAmount,
-      'cigaratte_daily_smoked': cigDailySmoked,
+      'cigaratte_amount_per_pack': cig_amount,
+      'cigaratte_daily_smoked': cig_daily_smoked,
       'email': email,
-      'last_date_smoked': lastDate,
+      'last_date_smoked': last_date,
       'price_per_pack': price,
-      'user_id': userId,
+      'user_id': user_id,
       'username': username
     });
   }
 
-  void updateData(int cigaratteAmountPerPack, int cigaratteDailySmoked,
-      DateTime lastDateSmoked, int pricePerPack) async {
+  void updateData(int cigaratte_amount_per_pack, int cigaratte_daily_smoked,
+      DateTime last_date_smoked, int price_per_pack) async {
     CollectionReference collection =
         FirebaseFirestore.instance.collection('user-details');
     return collection.doc(uid).update({
-      'cigaratte_amount_per_pack': cigaratteAmountPerPack,
-      'cigaratte_daily_smoked': cigaratteDailySmoked,
-      'last_date_smoked': lastDateSmoked,
-      'price_per_pack': pricePerPack,
+      'cigaratte_amount_per_pack': cigaratte_amount_per_pack,
+      'cigaratte_daily_smoked': cigaratte_daily_smoked,
+      'last_date_smoked': last_date_smoked,
+      'price_per_pack': price_per_pack,
     });
   }
 

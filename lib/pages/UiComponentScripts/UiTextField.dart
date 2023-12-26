@@ -8,13 +8,13 @@ class UiTextField extends StatelessWidget {
   final void Function(String)? onChanged;
 
   const UiTextField({
-    super.key,
+    Key? key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
     this.validator,
     this.onChanged,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

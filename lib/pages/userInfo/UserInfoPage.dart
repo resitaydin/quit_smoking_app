@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:loginui/pages/UiComponentScripts/UiButton.dart';
+import 'package:loginui/pages/home/MainPage.dart';
 import 'package:loginui/pages/home/navigatorBarPage.dart';
 import 'package:loginui/pages/userInfo/widgets/greenIntroWidget.dart';
 import 'package:loginui/pages/userInfo/widgets/textWidget.dart';
@@ -13,8 +14,8 @@ import 'package:loginui/services/local_storage_service.dart';
 class UserInfoPage extends StatefulWidget {
   final String? uid;
 
-  const UserInfoPage({super.key, this.uid});
-  const UserInfoPage.update({super.key, required this.uid});
+  const UserInfoPage({Key? key, this.uid}) : super(key: key);
+  const UserInfoPage.update({Key? key, required this.uid}) : super(key: key);
 
   @override
   State<UserInfoPage> createState() => _UserInfoPageState();
@@ -41,9 +42,10 @@ class _UserInfoPageState extends State<UserInfoPage> {
     dateController = TextEditingController();
     timeController = TextEditingController();
     if (widget.uid != null) {
-      dateController.text = DateFormat('dd MM yyyy').format(
-      LocalStorageService().getLastDateSmoked(), // Fixed formatting error by updating here.
-      );
+      dateController.text = LocalStorageService()
+          .getLastDateSmoked()
+          .toString()
+          .substring(0, 10);
       timeController.text = LocalStorageService()
           .getLastDateSmoked()
           .toString()
@@ -104,14 +106,14 @@ class _UserInfoPageState extends State<UserInfoPage> {
     }
 
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const NavigatorBarPage()));
+        MaterialPageRoute(builder: (context) => NavigatorBarPage()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: widget.uid != null ? const BackButton() : null,
+        leading: widget.uid != null ? BackButton() : null,
         ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -192,12 +194,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                               Expanded(
                                 child: TextFormField(
                                   controller: dateController,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 18.0,
                                     color: Colors
                                         .green, // Customize the text color
                                   ),
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     contentPadding:
                                         EdgeInsets.symmetric(horizontal: 16.0),
                                     hintText: 'Select Date',
@@ -205,8 +207,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   ),
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Icon(
                                   Icons
                                       .calendar_today, // You can use any date-related icon
@@ -239,12 +241,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                               Expanded(
                                 child: TextFormField(
                                   controller: timeController,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 18.0,
                                     color: Colors
                                         .green, // Customize the text color
                                   ),
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     contentPadding:
                                         EdgeInsets.symmetric(horizontal: 16.0),
                                     hintText: 'Select Time',
@@ -252,11 +254,11 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   ),
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Icon(
                                   Icons
-                                      .access_time,
+                                      .access_time, // You can use any time-related icon
                                   color:
                                       Colors.green, // Customize the icon color
                                 ),

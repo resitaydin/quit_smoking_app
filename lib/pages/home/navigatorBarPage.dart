@@ -16,11 +16,11 @@ class _NavigatorBarPageState extends State<NavigatorBarPage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    const MainPage(),
+    MainPage(),
     AchievementList(),
-    const UnsmokedGrid(),
+    UnsmokedGrid(),
     SettingsPage(),
-    const PostScreen(),
+    PostScreen(),
   ];
 
   void onTabTapped(int index) {

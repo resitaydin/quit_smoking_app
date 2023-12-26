@@ -45,7 +45,7 @@ String title, TextEditingController controller, Function validator,
                 .black87, // Changed text color to black for better readability
           ),
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
+            contentPadding: EdgeInsets.symmetric(
                 horizontal: 16), // Added padding for better text alignment
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),

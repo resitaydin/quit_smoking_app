@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 
 class Post {
   String user_id;
@@ -13,6 +14,6 @@ class Post {
       required this.created_at,
       this.uid})
       {
-        // Intentionally left blank.
+        debugPrint("user_id: $user_id" + "content: $content" + "parental_id: $parental_id" + "created_at: $created_at" + "uid: $uid");
       }
 }

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:loginui/pages/UiComponentScripts/UiButton.dart';
 import 'package:loginui/pages/UiComponentScripts/UiTextField.dart';
+import 'package:loginui/pages/home/navigatorBarPage.dart';
 import 'package:loginui/services/auth.dart';
-import 'package:loginui/services/database.dart';
+import 'package:loginui/services/local_storage_service.dart';
 import 'package:loginui/shared/loading.dart';
 
 class UserLoginPage extends StatefulWidget {
   final Function toggleView;
 
-  const UserLoginPage({super.key, required this.toggleView});
+  const UserLoginPage({Key? key, required this.toggleView}) : super(key: key);
 
   @override
   _UserLoginPageState createState() => _UserLoginPageState();
@@ -46,7 +47,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
       }
     }
     print("Signing in is done...");
-    await DatabaseService().fetchData();
+    LocalStorageService().setData();
   }
 
   void signUp() {
@@ -55,65 +56,60 @@ class _UserLoginPageState extends State<UserLoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (loading) {
-      return const Loading();
-    } else {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-              resizeToAvoidBottomInset: false,
-              backgroundColor: Colors.white,
-              body: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 25),
-        
-                      // Logo and App Name
-                      _buildLogoAndAppName(),
-        
-                      const SizedBox(height: 25),
-        
-                      // Email and Password TextFields
-                      _buildTextFields(),
-        
-                      const SizedBox(height: 10),
-        
-                      // Forgot Password
-                      _buildForgotPassword(),
-        
-                      const SizedBox(height: 25),
-        
-                      // Sign In Button
-                      UiButton(
-                        buttonName: "Sign In",
-                        onTap: signUserIn,
-                      ),
-        
-                      const SizedBox(height: 20),
-        
-                      // Divider and Sign Up Button
-                      _buildDividerAndSignUp(),
-        
-                      UiButton(
-                        buttonName: "Sign Up",
-                        onTap: signUp,
-                      ),
-        
-                      Text(error,
-                          style:
-                              const TextStyle(color: Colors.red, fontSize: 14.0)),
-                    ],
-                  ),
+    return loading
+        ? const Loading()
+        : Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.white,
+            body: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 25),
+
+                    // Logo and App Name
+                    _buildLogoAndAppName(),
+
+                    const SizedBox(height: 25),
+
+                    // Email and Password TextFields
+                    _buildTextFields(),
+
+                    const SizedBox(height: 10),
+
+                    // Forgot Password
+                    _buildForgotPassword(),
+
+                    const SizedBox(height: 25),
+
+                    // Sign In Button
+                    UiButton(
+                      buttonName: "Sign In",
+                      onTap: signUserIn,
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // Divider and Sign Up Button
+                    _buildDividerAndSignUp(),
+
+                    UiButton(
+                      buttonName: "Sign Up",
+                      onTap: signUp,
+                    ),
+
+                    Text(error,
+                        style:
+                            const TextStyle(color: Colors.red, fontSize: 14.0)),
+                  ],
                 ),
               ),
             ),
-      );
-    }
+          );
   }
 
   Widget _buildLogoAndAppName() {
@@ -125,7 +121,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
           color: Colors.green,
           size: 100,
         ),
-        const SizedBox(
+        SizedBox(
           width: 8.0,
         ),
         Text(
@@ -133,13 +129,13 @@ class _UserLoginPageState extends State<UserLoginPage> {
           style: TextStyle(
             fontFamily: 'Pacifico',
             color: Colors.green,
-            fontSize: 25.0,
+            fontSize: 28.0,
             fontWeight: FontWeight.bold,
             letterSpacing: 2.0,
             shadows: [
               Shadow(
                 color: Colors.black.withOpacity(0.5),
-                offset: const Offset(2, 2),
+                offset: Offset(2, 2),
                 blurRadius: 4,
               ),
             ],
@@ -197,8 +193,8 @@ class _UserLoginPageState extends State<UserLoginPage> {
   }
 
   Widget _buildForgotPassword() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -212,8 +208,8 @@ class _UserLoginPageState extends State<UserLoginPage> {
   }
 
   Widget _buildDividerAndSignUp() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 14.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14.0),
       child: Row(
         children: [
           Expanded(
@@ -223,7 +219,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Text(
               'If you are new, join us with your mail',
               style: TextStyle(color: Colors.green),

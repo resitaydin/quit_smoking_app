@@ -13,7 +13,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final AuthService _auth = AuthService();
+  AuthService _auth = AuthService();
 
   DateTime lastDateSmoked = DateTime.now();
   int cigaratte_daily_smoked = 0;
@@ -23,24 +23,24 @@ class _MainPageState extends State<MainPage> {
   int current_smoke_amount = 0;
 
   Timer? countUppTimer;
-  Duration myDuration = const Duration();
+  Duration myDuration = Duration();
   double savedMoney = 0.0;
   int total_seconds = 0;
 
-  @override
   void initState() {
     super.initState();
-    final Future<FirebaseApp> fApp = Firebase.initializeApp(
+    final Future<FirebaseApp> _fApp = Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    fApp.then((_) {
+    _fApp.then((_) {
       LocalStorageService().setData().then((_) {
+        LocalStorageService().getData().then((data) {
           setState(() {
-            lastDateSmoked = LocalStorageService().getLastDateSmoked();
-            cigaratte_daily_smoked = LocalStorageService().getCigaratteDailySmoked();
-            cigaratte_amount_per_pack = LocalStorageService().getCigaratteAmountPerPack();
-            price_per_pack = LocalStorageService().getPricePerPack();
+            lastDateSmoked = (data['last_date_smoked'] ?? '');
+            cigaratte_daily_smoked = data['cigaratte_daily_smoked'] ?? 0;
+            cigaratte_amount_per_pack = data['cigaratte_amount_per_pack'] ?? 0;
+            price_per_pack = data['price_per_pack'] ?? 0;
 
             Duration difference = DateTime.now().difference(lastDateSmoked);
             total_seconds = difference.inSeconds;
@@ -49,15 +49,16 @@ class _MainPageState extends State<MainPage> {
           current_smoke_amount = calculateSmokeAmount();
           savedMoney = calculateSavedMoney();
           startTimer();
+        });
       });
     });
   }
 
   double calculateSavedMoney() {
-    int cigarattesNotSmoked =
+    int cigarattes_not_smoked =
         calculateSmokeAmount(); // number of cigarattes not smoked
-    double pricePerCigaratte = price_per_pack / cigaratte_amount_per_pack;
-    return pricePerCigaratte * cigarattesNotSmoked; // return saved money
+    double price_per_cigaratte = price_per_pack / cigaratte_amount_per_pack;
+    return price_per_cigaratte * cigarattes_not_smoked; // return saved money
   }
 
   int calculateSmokeAmount() {
@@ -66,7 +67,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void startTimer() {
-    countUppTimer = Timer.periodic(const Duration(seconds: 1), (_) => setCountUpp());
+    countUppTimer = Timer.periodic(Duration(seconds: 1), (_) => setCountUpp());
   }
 
   @override
@@ -77,7 +78,7 @@ class _MainPageState extends State<MainPage> {
 
   // Step 6
   void setCountUpp() {
-    const incrementSecondsBy = 1;
+    final incrementSecondsBy = 1;
     if (mounted) {
       // Check if the widget is still in the tree
       setState(() {
@@ -94,7 +95,7 @@ class _MainPageState extends State<MainPage> {
       home: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: const Text('Main Page'),
+          title: Text('Main Page'),
           centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(
@@ -110,13 +111,13 @@ class _MainPageState extends State<MainPage> {
           ),
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.logout),
+              icon: Icon(Icons.logout),
               onPressed: () {
                 _auth.signOut();
               },
             ),
           ],
-          shape: const RoundedRectangleBorder(
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(30),
             ),
@@ -127,12 +128,12 @@ class _MainPageState extends State<MainPage> {
           child: Column(
             children: [
               buildTime(), // Time part
-              const SizedBox(
+              SizedBox(
                   height:
                       20), // Leave some space between the time and the widgets
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: Colors.grey[400],
                     borderRadius: BorderRadius.circular(40),
@@ -141,7 +142,7 @@ class _MainPageState extends State<MainPage> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: const Offset(0, 3),
+                        offset: Offset(0, 3),
                       ),
                     ],
                   ),
@@ -159,7 +160,7 @@ class _MainPageState extends State<MainPage> {
                           time: '$current_smoke_amount',
                           header: 'Smoke Amount'),
                       // Widget 2
-                      infoCard(time: '₺${savedMoney.toInt()}', header: 'Saved Money'),
+                      infoCard(time: '₺$savedMoney', header: 'Saved Money'),
                       // Widget 3
                       infoCard(
                           time: '  ${myDuration.inDays}  ',
@@ -182,7 +183,7 @@ class _MainPageState extends State<MainPage> {
   Widget infoCard({required String time, required String header}) => Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.green,
               borderRadius: BorderRadius.circular(20),
@@ -193,10 +194,10 @@ class _MainPageState extends State<MainPage> {
             ),
             child: Text(
               time,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                fontSize: 40,
+                fontSize: 60,
               ),
             ),
           ),
@@ -213,7 +214,7 @@ class _MainPageState extends State<MainPage> {
     final seconds = strDigits(myDuration.inSeconds.remainder(60));
 
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey[400],
         borderRadius: BorderRadius.circular(40),
@@ -222,7 +223,7 @@ class _MainPageState extends State<MainPage> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: const Offset(0, 3),
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -245,7 +246,7 @@ class _MainPageState extends State<MainPage> {
       Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.green,
               borderRadius: BorderRadius.circular(20),
@@ -256,10 +257,10 @@ class _MainPageState extends State<MainPage> {
             ),
             child: Text(
               time,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                fontSize: 35,
+                fontSize: 60,
               ),
             ),
           ),

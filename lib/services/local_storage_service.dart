@@ -10,10 +10,6 @@ class LocalStorageService {
 
   LocalStorageService._internal() {
     setData();
-    getCigaratteDailySmoked();
-    getCigaratteAmountPerPack();
-    getPricePerPack();
-    getLastDateSmoked();
     getUid();
   }
 
@@ -31,6 +27,17 @@ class LocalStorageService {
     prefs.setString(
         'last_date_smoked', _dbService.last_date_smoked.toIso8601String());
     user = FirebaseAuth.instance.currentUser;
+  }
+
+  Future<Map<String, dynamic>> getData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return {
+      'cigaratte_daily_smoked': prefs.getInt('cigaratte_daily_smoked'),
+      'cigaratte_amount_per_pack': prefs.getInt('cigaratte_amount_per_pack'),
+      'price_per_pack': prefs.getInt('price_per_pack'),
+      'last_date_smoked':
+          DateTime.parse(prefs.getString('last_date_smoked') ?? ''),
+    };
   }
 
   int getCigaratteDailySmoked() {

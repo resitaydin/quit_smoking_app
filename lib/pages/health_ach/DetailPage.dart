@@ -86,7 +86,7 @@ class DetailPage extends StatelessWidget {
             Container(height: 9),
             Text(
               time,
-              style: const TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16),
             ),
             Container(height: 9),
             Container(

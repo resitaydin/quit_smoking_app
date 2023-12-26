@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UnsmokedGrid extends StatefulWidget {
-  const UnsmokedGrid({super.key});
+  const UnsmokedGrid({Key? key}) : super(key: key);
 
   @override
   State<UnsmokedGrid> createState() => UnsmokedGrigState();
@@ -10,21 +10,21 @@ class UnsmokedGrid extends StatefulWidget {
 class UnsmokedGrigState extends State<UnsmokedGrid> {
   @override
   Widget build(BuildContext context) {
-    const cigarettes = 100; //TODO: fetch data from database
-    const smokeFree = 20; //TODO: fetch data from database
-    const lifeGained = 12; //TODO: fetch data from database
+    final cigarettes = 100; //TODO: fetch data from database
+    final smoke_free = 20; //TODO: fetch data from database
+    final life_gained = 12; //TODO: fetch data from database
 
-    final levelsCigarettes = [10, 35, 100, 250];
-    final levelsSmokeFree = [5, 20, 60, 250];
-    final levelsLifeGained = [5, 10, 30, 90];
+    final _levels_cigarettes = [10, 35, 100, 250];
+    final _levels_smoke_free = [5, 20, 60, 250];
+    final _levels_life_gained = [5, 10, 30, 90];
 
     Map<String, List<int>> levelThresholds = {
-      'Cigarettes not Smoked': levelsCigarettes,
-      'Smoke free (days)': levelsSmokeFree,
-      'Life regained (days)': levelsLifeGained,
+      'Cigarettes not Smoked': _levels_cigarettes,
+      'Smoke free (days)': _levels_smoke_free,
+      'Life regained (days)': _levels_life_gained,
     };
 
-    final images = [
+    final _images = [
       'assets/images/trophy_pink.jpg',
       'assets/images/trophy_silver.jpg',
       'assets/images/trophy_brown.jpg',
@@ -34,8 +34,8 @@ class UnsmokedGrigState extends State<UnsmokedGrid> {
     // Define your trophy levels here
     Map<String, int> trophyLevels = {
       'Cigarettes not Smoked': cigarettes,
-      'Smoke free (days)': smokeFree,
-      'Life regained (days)': lifeGained,
+      'Smoke free (days)': smoke_free,
+      'Life regained (days)': life_gained,
     };
 
     return ListView(
@@ -44,11 +44,11 @@ class UnsmokedGrigState extends State<UnsmokedGrid> {
           children: [
             Text(
               entry.key,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             GridView.count(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
@@ -60,10 +60,10 @@ class UnsmokedGrigState extends State<UnsmokedGrid> {
                     children: <Widget>[
                       Image.asset(
                           entry.value >= levelThresholds[entry.key]![index]
-                              ? images.elementAt(index)
+                              ? _images.elementAt(index)
                               : 'assets/images/trophy_gray.png'),
                       Text(levelThresholds[entry.key]![index].toString(),
-                          style: const TextStyle(fontSize: 9.0)),
+                          style: TextStyle(fontSize: 9.0)),
                     ],
                   ),
                 );
