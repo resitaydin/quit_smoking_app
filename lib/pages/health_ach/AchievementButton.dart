@@ -47,8 +47,8 @@ class AchievementButton extends StatelessWidget {
                       width: 80,
                       child: CircularProgressIndicator(
                         value: percentage,
-                        backgroundColor:
-                            const Color.fromARGB(255, 226, 223, 223),
+                        backgroundColor: // const Color.fromARGB(255, 226, 223, 223)
+                          Colors.grey[400],
                         valueColor: const AlwaysStoppedAnimation<Color>(
                             Color.fromARGB(255, 114, 192, 116)),
                         strokeWidth: 7,
