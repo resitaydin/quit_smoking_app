@@ -38,9 +38,7 @@ class _PostScreenState extends State<PostScreen> {
           created_at: data['date'].toDate(),
         );
         posts.add(post);
-      }
-      else
-      {
+      } else {
         final data = element.data();
         final post = Post(
           user_id: data['user_id'],
@@ -56,11 +54,13 @@ class _PostScreenState extends State<PostScreen> {
     posts.sort((a, b) => a.created_at.compareTo(b.created_at));
     // wait .5 seconds for the scroll controller to initialize
     Future.delayed(const Duration(milliseconds: 500), () {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.fastOutSlowIn,
-      );
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.fastOutSlowIn,
+        );
+      }
     });
   }
 
@@ -83,18 +83,22 @@ class _PostScreenState extends State<PostScreen> {
       'date': DateTime.now(),
     });
 
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.fastOutSlowIn,
-    );
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(child: Text('Posts', style: TextStyle(fontWeight: FontWeight.bold))),
+          title: const Center(
+              child:
+                  Text('Posts', style: TextStyle(fontWeight: FontWeight.bold))),
         ),
         body: FutureBuilder(
             future: fetchPosts(),
@@ -114,47 +118,50 @@ class _PostScreenState extends State<PostScreen> {
                       itemCount: posts.length,
                       controller: _scrollController,
                       itemBuilder: (context, index) {
-                        return Card(  
+                        return Card(
                           color: const Color.fromARGB(255, 255, 255, 255),
                           shadowColor: const Color.fromARGB(255, 0, 0, 0),
                           elevation: 3,
-                          surfaceTintColor: const Color.fromARGB(255, 255, 255, 255),
+                          surfaceTintColor:
+                              const Color.fromARGB(255, 255, 255, 255),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: ListTile(
-                            title: FutureBuilder<String>(
-                              future: ChatHelper().getUserName(posts[index].user_id),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
+                              title: FutureBuilder<String>(
+                                future: ChatHelper()
+                                    .getUserName(posts[index].user_id),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return const Text('An error occurred!');
+                                  }
+                                  return Text(
+                                    snapshot.data!,
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 25, 184, 233),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   );
-                                } else if (snapshot.hasError) {
-                                  return const Text('An error occurred!');
-                                }
-                                return Text(
-                                  snapshot.data!,
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 25, 184, 233),
-                                    fontWeight: FontWeight.bold,
+                                },
+                              ),
+                              subtitle: Text(posts[index].content),
+                              trailing: Text(
+                                  "${comments.where((post) => post.parental_id == posts[index].uid).length} Comments"),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CommentScreen(
+                                      post: posts[index],
+                                    ),
                                   ),
                                 );
-                              },
-                            ),
-                            subtitle: Text(posts[index].content),
-                            trailing: Text("${comments.where((post) => post.parental_id == posts[index].uid).length} Comments"),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CommentScreen(
-                                    post: posts[index],
-                                  ),
-                                ),
-                              );
-                            }),
+                              }),
                         );
                       },
                     ),
@@ -163,9 +170,9 @@ class _PostScreenState extends State<PostScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       decoration: const InputDecoration(
-                         border: OutlineInputBorder(),
-                          labelText: 'Enter a post',
-                          prefixIcon: Icon(Icons.message),
+                        border: OutlineInputBorder(),
+                        labelText: 'Enter a post',
+                        prefixIcon: Icon(Icons.message),
                       ),
                       onSubmitted: (value) {
                         setState(() {
@@ -243,7 +250,9 @@ class _CommentScreenState extends State<CommentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(child: Text('Posts', style: TextStyle(fontWeight: FontWeight.bold))),
+          title: const Center(
+              child:
+                  Text('Posts', style: TextStyle(fontWeight: FontWeight.bold))),
         ),
         body: FutureBuilder(
             future: fetchComments(),
@@ -258,63 +267,62 @@ class _CommentScreenState extends State<CommentScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
-                            title: FutureBuilder<String>(
-                              future: ChatHelper()
-                                  .getUserName(widget.post.user_id),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return const Text('An error occurred!');
-                                }
-                                return Text(
-                                  snapshot.data!,
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 25, 184, 233)),
-                                );
-                              },
-                            ),
-                            subtitle: Text(widget.post.content)
-                            ),
+                        title: FutureBuilder<String>(
+                          future: ChatHelper().getUserName(widget.post.user_id),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return const Text('An error occurred!');
+                            }
+                            return Text(
+                              snapshot.data!,
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 25, 184, 233)),
+                            );
+                          },
+                        ),
+                        subtitle: Text(widget.post.content)),
                   ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: comments.length,
                       itemBuilder: (context, index) {
                         return Card(
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          shadowColor: const Color.fromARGB(255, 0, 0, 0),
-                          elevation: 3,
-                          surfaceTintColor: const Color.fromARGB(255, 255, 255, 255),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: ListTile(
-                            title: FutureBuilder<String>(
-                              future: ChatHelper()
-                                  .getUserName(comments[index].user_id),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return const Text('An error occurred!');
-                                }
-                                return Text(
-                                  snapshot.data!,
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 25, 184, 233)),
-                                );
-                              },
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            shadowColor: const Color.fromARGB(255, 0, 0, 0),
+                            elevation: 3,
+                            surfaceTintColor:
+                                const Color.fromARGB(255, 255, 255, 255),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
                             ),
-                            subtitle: Text(comments[index].content),
-                        )
-                        );
+                            child: ListTile(
+                              title: FutureBuilder<String>(
+                                future: ChatHelper()
+                                    .getUserName(comments[index].user_id),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return const Text('An error occurred!');
+                                  }
+                                  return Text(
+                                    snapshot.data!,
+                                    style: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 25, 184, 233)),
+                                  );
+                                },
+                              ),
+                              subtitle: Text(comments[index].content),
+                            ));
                       },
                     ),
                   ),
@@ -322,9 +330,9 @@ class _CommentScreenState extends State<CommentScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       decoration: const InputDecoration(
-                         border: OutlineInputBorder(),
-                          labelText: 'Enter a comment',
-                          prefixIcon: Icon(Icons.message),
+                        border: OutlineInputBorder(),
+                        labelText: 'Enter a comment',
+                        prefixIcon: Icon(Icons.message),
                       ),
                       onSubmitted: (value) {
                         setState(() {

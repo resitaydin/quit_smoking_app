@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginui/pages/health_ach/AchievementButton.dart';
+import 'package:loginui/services/local_storage_service.dart';
 
 class AchievementList extends StatelessWidget {
   AchievementList({super.key});
@@ -46,7 +47,10 @@ class AchievementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double totalMins = 1444; //TODO: Fetch the totalMins from Local Data
+    DateTime lastDateSmoked = LocalStorageService().getLastDateSmoked();
+
+    Duration difference = DateTime.now().difference(lastDateSmoked);
+    int totalMins = difference.inMinutes; // Calculate the difference between now in minutes
 
     final times = {
       totalMins / 20, //20 dakika

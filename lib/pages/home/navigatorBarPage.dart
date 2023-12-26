@@ -19,8 +19,8 @@ class _NavigatorBarPageState extends State<NavigatorBarPage> {
     const MainPage(),
     AchievementList(),
     const UnsmokedGrid(),
-    SettingsPage(),
     const PostScreen(),
+    SettingsPage(),
   ];
 
   void onTabTapped(int index) {
@@ -53,12 +53,12 @@ class _NavigatorBarPageState extends State<NavigatorBarPage> {
               icon: Icon(MdiIcons.trophy),
             ),
             const BottomNavigationBarItem(
-              label: 'Settings',
-              icon: Icon(Icons.settings),
-            ),
-            const BottomNavigationBarItem(
               label: 'Community',
               icon: Icon(Icons.message),
+            ),
+            const BottomNavigationBarItem(
+              label: 'Settings',
+              icon: Icon(Icons.settings),
             ),
           ],
         ),
