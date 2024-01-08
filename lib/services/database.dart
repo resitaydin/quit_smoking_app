@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class DatabaseService {
   // user id from firebase (taken on sign-in/register)
@@ -8,6 +9,7 @@ class DatabaseService {
   int cigaratte_daily_smoked = 0;
   int cigaratte_amount_per_pack = 0;
   int price_per_pack = 0;
+  TimeOfDay? lastMessageTime;
 
   // constructor
   DatabaseService({this.uid});
@@ -29,7 +31,8 @@ class DatabaseService {
       'last_date_smoked': lastDate,
       'price_per_pack': price,
       'user_id': userId,
-      'username': username
+      'username': username,
+      'last_message_time': lastMessageTime,
     });
   }
 
@@ -42,6 +45,7 @@ class DatabaseService {
       'cigaratte_daily_smoked': cigaratteDailySmoked,
       'last_date_smoked': lastDateSmoked,
       'price_per_pack': pricePerPack,
+      'last_message_time': lastMessageTime,
     });
   }
 
@@ -60,6 +64,7 @@ class DatabaseService {
       cigaratte_amount_per_pack =
           querySnapshot.data()?['cigaratte_amount_per_pack'];
       price_per_pack = querySnapshot.data()?['price_per_pack'];
+      lastMessageTime = querySnapshot.data()?['last_message_time'];
     } catch (e) {
       print('Error fetching user details: $e');
     }
