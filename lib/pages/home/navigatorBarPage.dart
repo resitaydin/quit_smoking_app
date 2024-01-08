@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loginui/pages/health/UnsmokedGrid.dart';
-import 'package:loginui/pages/health_ach/AchievementList.dart';
+import 'package:loginui/pages/achievements/TrophyList.dart';
+import 'package:loginui/pages/health/HealthList.dart';
 import 'package:loginui/pages/home/MainPage.dart';
 import 'package:loginui/pages/settings/settings_page.dart';
 import 'package:loginui/pages/social/post_screen.dart';
@@ -17,8 +17,8 @@ class _NavigatorBarPageState extends State<NavigatorBarPage> {
 
   final List<Widget> _pages = [
     const MainPage(),
-    AchievementList(),
-    const UnsmokedGrid(),
+    HealthList(),
+    const TrophyList(),
     const PostScreen(),
     SettingsPage(),
   ];
@@ -36,6 +36,7 @@ class _NavigatorBarPageState extends State<NavigatorBarPage> {
       home: Scaffold(
         body: _pages[_currentIndex], // Use _pages[] to switch pages
         bottomNavigationBar: BottomNavigationBar(
+          fixedColor: Colors.green,
           type: BottomNavigationBarType.fixed,
           onTap: onTabTapped,
           currentIndex: _currentIndex,

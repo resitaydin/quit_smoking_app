@@ -78,6 +78,17 @@ flutter:
      - assets/images/trophy_pink.jpg
      - assets/images/trophy_silver.jpg
      - assets/images/trophy.png
+     - assets/images/crown.png
+     - assets/images/medal.png
+     - assets/images/prize.png
+     - assets/images/red1.png
+     - assets/images/red2.png
+     - assets/images/red3.png
+     - assets/images/red11.png
+     - assets/images/rocket.png
+     - assets/images/rocket1.png
+     - assets/images/sword.png
+
 
   #   - images/a_dot_ham.jpeg
 

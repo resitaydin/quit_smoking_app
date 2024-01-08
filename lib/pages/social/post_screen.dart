@@ -65,6 +65,39 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   void addPost(String value) {
+    if (value.isEmpty) {
+      return;
+    }
+
+    if (LocalStorageService().loadLastMessageTime() != null) {
+      final lastMessageTime = LocalStorageService().loadLastMessageTime()!;
+      final now = DateTime.now();
+      final difference = now.difference(DateTime(now.year, now.month, now.day,
+          lastMessageTime.hour, lastMessageTime.minute));
+      if (difference.inMinutes < 1) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Wait'),
+              content: const Text('Please wait before adding another post.'),
+              actions: [
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+    }
+
+    LocalStorageService().saveLastMessageTime(TimeOfDay.now());
+
     String userId = LocalStorageService().getUid();
     String parentalId = "";
     final post = Post(
@@ -96,10 +129,21 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(
-              child:
-                  Text('Posts', style: TextStyle(fontWeight: FontWeight.bold))),
+        title: const Text('Posts'),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                Colors.green.shade700,
+                Colors.green.shade400,
+              ],
+            ),
+          ),
         ),
+      ),
         body: FutureBuilder(
             future: fetchPosts(),
             builder: (context, snapshot) {
@@ -228,6 +272,39 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   void addComment(String value) {
+    if (value.isEmpty) {
+      return;
+    }
+
+    if (LocalStorageService().loadLastMessageTime() != null) {
+      final lastMessageTime = LocalStorageService().loadLastMessageTime()!;
+      final now = DateTime.now();
+      final difference = now.difference(DateTime(now.year, now.month, now.day,
+          lastMessageTime.hour, lastMessageTime.minute));
+      if (difference.inMinutes < 1) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Wait'),
+              content: const Text('Please wait before adding another comment.'),
+              actions: [
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+    }
+
+    LocalStorageService().saveLastMessageTime(TimeOfDay.now());
+
     String parentalId = widget.post.uid ?? "";
     final post = Post(
       user_id: LocalStorageService().getUid(),

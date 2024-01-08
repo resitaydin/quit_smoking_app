@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:loginui/pages/health_ach/AchievementButton.dart';
+import 'package:loginui/pages/health/HealthButton.dart';
 import 'package:loginui/services/local_storage_service.dart';
 
-class AchievementList extends StatelessWidget {
-  AchievementList({super.key});
+class HealthList extends StatelessWidget {
+  HealthList({super.key});
 
   final _main_texts = {
     'Blood pressure and pulse return to normal approximately 20 minutes after the last cigarette.',
@@ -62,10 +62,10 @@ class AchievementList extends StatelessWidget {
       totalMins / (10 * 365 * 24 * 60), //10 yıl
     };
 
-    List<AchievementButton> achievements = [];
+    List<HealthButton> achievements = [];
     for (int index = 0; index < 7; index++) {
       achievements.add(
-        AchievementButton(
+        HealthButton(
           _main_texts.elementAt(index),
           _times_texts.elementAt(index),
           times.elementAt(index),
@@ -74,6 +74,22 @@ class AchievementList extends StatelessWidget {
         ),
       );
     }
-    return ListView(children: achievements);
+    return Scaffold( appBar: AppBar(
+        title: const Text('Health'),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                Colors.green.shade700,
+                Colors.green.shade400,
+              ],
+            ),
+          ),
+        ),
+      ),
+      body: ListView(children: achievements));
   }
 }

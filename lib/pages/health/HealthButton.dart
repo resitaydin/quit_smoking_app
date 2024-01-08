@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:loginui/pages/health_ach/DetailPage.dart';
+import 'package:loginui/pages/health/DetailPage.dart';
 
-class AchievementButton extends StatelessWidget {
+class HealthButton extends StatelessWidget {
   final String text;
   final String time;
   final String subTextFirst;
   final String subTextLast;
   final double percentage;
 
-  const AchievementButton(this.text, this.time, this.percentage,
+  const HealthButton(this.text, this.time, this.percentage,
       this.subTextFirst, this.subTextLast,
       {super.key});
 
@@ -78,3 +78,16 @@ class AchievementButton extends StatelessWidget {
     );
   }
 }
+/*
+
+
+
+
+
+
+
+
+
+
+
+*/

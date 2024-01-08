@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:loginui/services/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,6 +39,16 @@ class LocalStorageService {
       'last_date_smoked':
           DateTime.parse(prefs.getString('last_date_smoked') ?? ''),
     };
+  }
+
+  // Save the last message time
+  void saveLastMessageTime(TimeOfDay lastMessageTime) {
+    _dbService.lastMessageTime = lastMessageTime;
+  }
+
+  // Load the last message time
+  TimeOfDay? loadLastMessageTime() {
+    return _dbService.lastMessageTime;
   }
 
   int getCigaratteDailySmoked() {

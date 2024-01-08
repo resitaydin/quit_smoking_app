@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:loginui/pages/social/firebase_options.dart';
@@ -68,7 +69,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   void startTimer() {
-    countUppTimer = Timer.periodic(const Duration(seconds: 1), (_) => setCountUpp());
+    countUppTimer =
+        Timer.periodic(const Duration(seconds: 1), (_) => setCountUpp());
   }
 
   @override
@@ -118,11 +120,6 @@ class _MainPageState extends State<MainPage> {
               },
             ),
           ],
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(50.0),
@@ -148,28 +145,32 @@ class _MainPageState extends State<MainPage> {
                     ],
                   ),
                   child: GridView.count(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.0,
-                    padding: const EdgeInsets.all(4.0),
-                    mainAxisSpacing:
-                        2.0, // Make the widgets close to each other
-                    crossAxisSpacing:
-                        2.0, // Make the widgets close to each other
+                    crossAxisCount: 1,
+                    childAspectRatio: 2.68,
+                    padding: const EdgeInsets.all(10.0),
+                    mainAxisSpacing: 6.0,
+                    crossAxisSpacing: 2.0,
                     children: <Widget>[
-                      // Widget 1
+                      // Widget 1 (Smoke Amount)
                       infoCard(
                           time: '$current_smoke_amount',
                           header: 'Smoke Amount'),
-                      // Widget 2
-                      infoCard(time: '₺${savedMoney.toInt()}', header: 'Saved Money'),
-                      // Widget 3
+
+                      // Widget 2 (Saved Money)
+                      infoCard(
+                          time: '₺${savedMoney.toInt()}',
+                          header: 'Saved Money'),
+
+                      // Widget 3 (Days Quit)
                       infoCard(
                           time: '  ${myDuration.inDays}  ',
                           header: 'Days Quit'),
-                      // Widget 4
+
+                      // Widget 4 (Gained Health)
                       infoCard(
-                          time: ' %${(myDuration.inDays / 180 * 100).toInt()} ',
-                          header: 'Gained Health'),
+                        time: ' %${min((myDuration.inDays / 180 * 100).toInt(), 100)} ',
+                        header: 'Gained Health',
+                      ),
                     ],
                   ),
                 ),
@@ -181,30 +182,38 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget infoCard({required String time, required String header}) => Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
+  Widget infoCard({required String time, required String header}) => Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.green,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: Colors.white,
+            width: 5,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              header,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
                 color: Colors.white,
-                width: 5,
+                fontSize: 18,
               ),
             ),
-            child: Text(
+            const SizedBox(height: 0),
+            Text(
               time,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                fontSize: 40,
+                fontSize: 35,
               ),
             ),
-          ),
-          const SizedBox(height: 24),
-          Text(header),
-        ],
+          ],
+        ),
       );
 
   Widget buildTime() {

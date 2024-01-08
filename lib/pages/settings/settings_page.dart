@@ -14,83 +14,143 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                Colors.green.shade700,
+                Colors.green.shade400,
+              ],
+            ),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child:
-        Center(child: 
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center, // This will center the buttons vertically
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment
+                .center, // This will center the buttons vertically
             children: [
               SizedBox(
                 width: double.infinity, // This will make the button full width
-                height: 50, // Specify the height of the button
-                child: ElevatedButton.icon(
-                  icon: const Icon(Icons.update),
-                  label: const Text('Update User Information'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserInfoPage.update(uid: LocalStorageService().getUid()),
+                height: 70, // Specify the height of the button
+                child: Material(
+                  elevation: 5.0, // This adds a shadow
+                  borderRadius: BorderRadius.circular(
+                      30.0), // This changes the shape of the button
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.update),
+                    label: const Text(
+                      'Update User Information',
+                      style: TextStyle(
+                        fontSize: 15, // Increase the font size
                       ),
-                    );
-                  },
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            30.0), // This changes the shape of the button
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserInfoPage.update(
+                              uid: LocalStorageService().getUid()),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 15),
               SizedBox(
                 width: double.infinity, // This will make the button full width
-                height: 50, // Specify the height of the button
-                child: ElevatedButton.icon(
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('I Smoked Again'),
-                  onPressed: () {
-                    FirebaseFirestore.instance
+                height: 70, // Specify the height of the button
+                child: Material(
+                  elevation: 5.0, // This adds a shadow
+                  borderRadius: BorderRadius.circular(
+                      30.0), // This changes the shape of the button
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.refresh),
+                    label: const Text(
+                      'I Smoked Again',
+                      style: TextStyle(
+                        fontSize: 15, // Increase the font size
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            30.0), // This changes the shape of the button
+                      ),
+                    ),
+                    onPressed: () {
+                      FirebaseFirestore.instance
                           .collection('user-details')
                           .doc(LocalStorageService().getUid())
                           .update({'last_date_smoked': DateTime.now()});
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Sorry to hear that'),
-                          actions: [
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Sorry to hear that'),
+                            actions: [
                               Center(
                                 child: TextButton(
-                                child: const Text('Continue'),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            )
-                          ],
-                        );
-                      },
-                    );
-                  },
+                                  child: const Text('Continue'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 15),
               SizedBox(
                 width: double.infinity, // This will make the button full width
-                height: 50, // Specify the height of the button
-                child: ElevatedButton.icon(
-                  icon: const Icon(Icons.logout),
-                  label: const Text('Log Out'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 235, 104, 95), // change the color to match your theme
+                height: 70, // Specify the height of the button
+                child: Material(
+                  elevation: 5.0, // This adds a shadow
+                  borderRadius: BorderRadius.circular(
+                      30.0), // This changes the shape of the button
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.logout),
+                    label: const Text(
+                      'Log Out',
+                      style: TextStyle(
+                        fontSize: 15, // Increase the font size
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[500],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            30.0), // This changes the shape of the button
+                      ),
+                    ),
+                    onPressed: () {
+                      _auth.signOut();
+                    },
                   ),
-                  onPressed: () {
-                    _auth.signOut();
-                  },
                 ),
-              ),
+              )
             ],
-          )
-        )
+          ),
+        ),
       ),
-      backgroundColor: const Color.fromARGB(255, 127, 173, 196), // Set the background color of the page
+      backgroundColor: Colors.white,
     );
   }
 }
