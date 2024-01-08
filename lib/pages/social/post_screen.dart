@@ -128,106 +128,97 @@ class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-        title: const Text('Posts'),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                Colors.green.shade700,
-                Colors.green.shade400,
-              ],
-            ),
-          ),
-        ),
+      appBar: AppBar(
+        title: const Center(
+            child:
+                Text('Posts', style: TextStyle(fontWeight: FontWeight.bold))),
       ),
-        body: FutureBuilder(
-            future: fetchPosts(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return const Center(child: Text('An error occured!'));
-              }
-              return Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: posts.length,
-                      controller: _scrollController,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          shadowColor: const Color.fromARGB(255, 0, 0, 0),
-                          elevation: 3,
-                          surfaceTintColor:
-                              const Color.fromARGB(255, 255, 255, 255),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: ListTile(
-                              title: FutureBuilder<String>(
-                                future: ChatHelper()
-                                    .getUserName(posts[index].user_id),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return const Text('An error occurred!');
-                                  }
-                                  return Text(
-                                    snapshot.data!,
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 25, 184, 233),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  );
-                                },
-                              ),
-                              subtitle: Text(posts[index].content),
-                              trailing: Text(
-                                  "${comments.where((post) => post.parental_id == posts[index].uid).length} Comments"),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CommentScreen(
-                                      post: posts[index],
-                                    ),
-                                  ),
-                                );
-                              }),
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter a post',
-                        prefixIcon: Icon(Icons.message),
+      body: FutureBuilder(
+        future: fetchPosts(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('An error occured!'));
+          }
+          return Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: posts.length,
+                  controller: _scrollController,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      shadowColor: const Color.fromARGB(255, 0, 0, 0),
+                      elevation: 3,
+                      surfaceTintColor:
+                          const Color.fromARGB(255, 255, 255, 255),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      onSubmitted: (value) {
-                        setState(() {
-                          addPost(value);
-                        });
-                      },
-                    ),
+                      child: ListTile(
+                          title: FutureBuilder<String>(
+                            future:
+                                ChatHelper().getUserName(posts[index].user_id),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasError) {
+                                return const Text('An error occurred!');
+                              }
+                              return Text(
+                                snapshot.data!,
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 25, 184, 233),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            },
+                          ),
+                          subtitle: Text(posts[index].content),
+                          trailing: Text(
+                              "${comments.where((post) => post.parental_id == posts[index].uid).length} Comments"),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CommentScreen(
+                                  post: posts[index],
+                                ),
+                              ),
+                            );
+                          }),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter a post',
+                    prefixIcon: Icon(Icons.message),
                   ),
-                ],
-              );
-            }));
+                  onSubmitted: (value) {
+                    setState(() {
+                      addPost(value);
+                    });
+                  },
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -326,100 +317,101 @@ class _CommentScreenState extends State<CommentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Center(
-              child:
-                  Text('Posts', style: TextStyle(fontWeight: FontWeight.bold))),
-        ),
-        body: FutureBuilder(
-            future: fetchComments(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return const Center(child: Text('An error occured!'));
-              }
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                        title: FutureBuilder<String>(
-                          future: ChatHelper().getUserName(widget.post.user_id),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (snapshot.hasError) {
-                              return const Text('An error occurred!');
-                            }
-                            return Text(
-                              snapshot.data!,
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 25, 184, 233)),
-                            );
-                          },
+      appBar: AppBar(
+        title: const Center(
+            child:
+                Text('Posts', style: TextStyle(fontWeight: FontWeight.bold))),
+      ),
+      body: FutureBuilder(
+        future: fetchComments(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('An error occured!'));
+          }
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                    title: FutureBuilder<String>(
+                      future: ChatHelper().getUserName(widget.post.user_id),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return const Text('An error occurred!');
+                        }
+                        return Text(
+                          snapshot.data!,
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 25, 184, 233)),
+                        );
+                      },
+                    ),
+                    subtitle: Text(widget.post.content)),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: comments.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        shadowColor: const Color.fromARGB(255, 0, 0, 0),
+                        elevation: 3,
+                        surfaceTintColor:
+                            const Color.fromARGB(255, 255, 255, 255),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        subtitle: Text(widget.post.content)),
+                        child: ListTile(
+                          title: FutureBuilder<String>(
+                            future: ChatHelper()
+                                .getUserName(comments[index].user_id),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasError) {
+                                return const Text('An error occurred!');
+                              }
+                              return Text(
+                                snapshot.data!,
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 25, 184, 233)),
+                              );
+                            },
+                          ),
+                          subtitle: Text(comments[index].content),
+                        ));
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter a comment',
+                    prefixIcon: Icon(Icons.message),
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: comments.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                            shadowColor: const Color.fromARGB(255, 0, 0, 0),
-                            elevation: 3,
-                            surfaceTintColor:
-                                const Color.fromARGB(255, 255, 255, 255),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: ListTile(
-                              title: FutureBuilder<String>(
-                                future: ChatHelper()
-                                    .getUserName(comments[index].user_id),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return const Text('An error occurred!');
-                                  }
-                                  return Text(
-                                    snapshot.data!,
-                                    style: const TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 25, 184, 233)),
-                                  );
-                                },
-                              ),
-                              subtitle: Text(comments[index].content),
-                            ));
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter a comment',
-                        prefixIcon: Icon(Icons.message),
-                      ),
-                      onSubmitted: (value) {
-                        setState(() {
-                          addComment(value);
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              );
-            }));
+                  onSubmitted: (value) {
+                    setState(() {
+                      addComment(value);
+                    });
+                  },
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
