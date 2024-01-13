@@ -72,7 +72,7 @@ class _MainPageState extends State<MainPage> {
       home: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          title: const Text('Main Page'),
+          title: const Text('Quit Smoking'),
           centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(

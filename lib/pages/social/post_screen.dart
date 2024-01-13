@@ -129,9 +129,20 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-            child:
-                Text('Posts', style: TextStyle(fontWeight: FontWeight.bold))),
+        title: const Text('Posts'),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                Colors.green.shade700,
+                Colors.green.shade400,
+              ],
+            ),
+          ),
+        ),
       ),
       body: FutureBuilder(
         future: fetchPosts(),
