@@ -43,11 +43,12 @@ class SettingsPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                       30.0), // This changes the shape of the button
                   child: ElevatedButton.icon(
-                    icon: const Icon(Icons.update),
+                    icon: const Icon(Icons.update, color: Colors.black),
                     label: const Text(
                       'Update User Information',
                       style: TextStyle(
-                        fontSize: 15, // Increase the font size
+                        color: Colors.black,
+                        fontSize: 14, // Increase the font size
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -77,11 +78,12 @@ class SettingsPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                       30.0), // This changes the shape of the button
                   child: ElevatedButton.icon(
-                    icon: const Icon(Icons.refresh),
+                    icon: const Icon(Icons.refresh, color: Colors.black),
                     label: const Text(
                       'I Smoked Again',
                       style: TextStyle(
-                        fontSize: 15, // Increase the font size
+                        color: Colors.black,
+                        fontSize: 14, // Increase the font size
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -99,11 +101,17 @@ class SettingsPage extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: const Text('Sorry to hear that'),
+                            title: const Text(
+                              'Sorry to hear that',
+                              textAlign: TextAlign.center,
+                            ),
                             actions: [
                               Center(
                                 child: TextButton(
-                                  child: const Text('Continue'),
+                                  child: const Text(
+                                    'Continue',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
@@ -126,11 +134,12 @@ class SettingsPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                       30.0), // This changes the shape of the button
                   child: ElevatedButton.icon(
-                    icon: const Icon(Icons.logout),
+                    icon: const Icon(Icons.logout, color: Colors.black),
                     label: const Text(
                       'Log Out',
                       style: TextStyle(
-                        fontSize: 15, // Increase the font size
+                        color: Colors.black,
+                        fontSize: 14, // Increase the font size
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
