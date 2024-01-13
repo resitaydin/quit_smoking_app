@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:loginui/pages/achievements/Trophy.dart';
+import 'package:loginui/services/local_storage_service.dart';
 
 class TrophyList extends StatelessWidget {
   const TrophyList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const cigarettes = 100; //TODO: fetch data from database
-    const smokeFree = 20; //TODO: fetch data from database
-    const lifeGained = 8; //TODO: fetch data from database
+    int cigarettes = LocalStorageService().calculateSmokeAmount();
+    int smokeFree = LocalStorageService().getTotalDaysNotSmoked();
+
+    // One cigarette shortens life by 12 minutes
+    int lifeGainedInMinutes = cigarettes * 12;
+
+    // Convert minutes to days, hours, and minutes
+    int lifeGained = lifeGainedInMinutes ~/ (24 * 60); // integer divison
 
     final levelsCigarettes = [10, 35, 100];
     final levelsSmokeFree = [5, 20, 60];
@@ -18,12 +24,12 @@ class TrophyList extends StatelessWidget {
       'Not Smoked Cigarattes: 10',
       'Not Smoked Cigarattes: 35',
       'Not Smoked Cigarattes: 100',
-      'Sigara içmeyen gün sayisi 5 gün',
-      'Sigara içmeyen gün sayisi 20 gün',
-      'Sigara içmeyen gün sayisi 60 gün',
-      'Kazanilan ömür 5 gün',
-      'Kazanilan ömür 20 gün',
-      'Kazanilan ömür 60 gün',
+      'Days without smoking: 5 days',
+      'Days without smoking: 20 days',
+      'Days without smoking: 60 days',
+      'Life regained: 5 days',
+      'Life regained: 20 days',
+      'Life regained: 60 days',
     };
 
     final images = [
@@ -39,7 +45,6 @@ class TrophyList extends StatelessWidget {
     ];
 
     List<Trophy> achievements = [];
-    print(mainTexts.length);
     achievements.add(const Trophy(
         "First step is quitting smoke.", "assets/images/rocket1.png", true));
     for (int index = 0; index < 3; index++) {
@@ -69,22 +74,23 @@ class TrophyList extends StatelessWidget {
         ),
       );
     }
-    return Scaffold(appBar: AppBar(
-        title: const Text('Achievements'),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                Colors.green.shade700,
-                Colors.green.shade400,
-              ],
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Achievements'),
+          centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+                  Colors.green.shade700,
+                  Colors.green.shade400,
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      body: ListView(children: achievements));
+        body: ListView(children: achievements));
   }
 }

@@ -67,6 +67,36 @@ class LocalStorageService {
     return _dbService.last_date_smoked;
   }
 
+  double calculateSavedMoney() {
+    int cigarattesNotSmoked =
+        calculateSmokeAmount(); // number of cigarattes not smoked
+    double pricePerCigaratte = getPricePerPack() / getCigaratteAmountPerPack();
+    return pricePerCigaratte * cigarattesNotSmoked; // return saved money
+  }
+
+  int calculateSmokeAmount() {
+    return (getCigaratteDailySmoked() * (getTotalSecondsNotSmoked() / 86400))
+        .toInt(); //  We're dividing daily_smoked_amount to days, 1 day is 86400 seconds.
+  }
+
+  int getTotalSecondsNotSmoked() {
+    Duration difference = DateTime.now().difference(getLastDateSmoked());
+    int totalSeconds = difference.inSeconds;
+    return totalSeconds;
+  }
+
+  int getTotalMinutesNotSmoked() {
+    Duration difference = DateTime.now().difference(getLastDateSmoked());
+    int totalMinutes = difference.inMinutes;
+    return totalMinutes;
+  }
+
+  int getTotalDaysNotSmoked() {
+    Duration difference = DateTime.now().difference(getLastDateSmoked());
+    int totalDays = difference.inDays;
+    return totalDays;
+  }
+
   String getUid() {
     return user!.uid;
   }

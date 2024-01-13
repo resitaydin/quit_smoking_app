@@ -47,10 +47,7 @@ class HealthList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime lastDateSmoked = LocalStorageService().getLastDateSmoked();
-
-    Duration difference = DateTime.now().difference(lastDateSmoked);
-    int totalMins = difference.inMinutes; // Calculate the difference between now in minutes
+    int totalMins = LocalStorageService().getTotalMinutesNotSmoked();
 
     final times = {
       totalMins / 20, //20 dakika
@@ -74,22 +71,23 @@ class HealthList extends StatelessWidget {
         ),
       );
     }
-    return Scaffold( appBar: AppBar(
-        title: const Text('Health'),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                Colors.green.shade700,
-                Colors.green.shade400,
-              ],
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Health'),
+          centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+                  Colors.green.shade700,
+                  Colors.green.shade400,
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      body: ListView(children: achievements));
+        body: ListView(children: achievements));
   }
 }

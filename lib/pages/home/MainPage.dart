@@ -26,7 +26,6 @@ class _MainPageState extends State<MainPage> {
   Timer? countUppTimer;
   Duration myDuration = const Duration();
   double savedMoney = 0.0;
-  int total_seconds = 0;
 
   @override
   void initState() {
@@ -44,28 +43,15 @@ class _MainPageState extends State<MainPage> {
             cigaratte_amount_per_pack = data['cigaratte_amount_per_pack'] ?? 0;
             price_per_pack = data['price_per_pack'] ?? 0;
 
-            Duration difference = DateTime.now().difference(lastDateSmoked);
-            total_seconds = difference.inSeconds;
-            myDuration = Duration(seconds: total_seconds);
+            myDuration = Duration(
+                seconds: LocalStorageService().getTotalSecondsNotSmoked());
           });
-          current_smoke_amount = calculateSmokeAmount();
-          savedMoney = calculateSavedMoney();
+          current_smoke_amount = LocalStorageService().calculateSmokeAmount();
+          savedMoney = LocalStorageService().calculateSavedMoney();
           startTimer();
         });
       });
     });
-  }
-
-  double calculateSavedMoney() {
-    int cigarattesNotSmoked =
-        calculateSmokeAmount(); // number of cigarattes not smoked
-    double pricePerCigaratte = price_per_pack / cigaratte_amount_per_pack;
-    return pricePerCigaratte * cigarattesNotSmoked; // return saved money
-  }
-
-  int calculateSmokeAmount() {
-    return (cigaratte_daily_smoked * (total_seconds / 86400))
-        .toInt(); //  We're dividing daily_smoked_amount to days, 1 day is 86400 seconds.
   }
 
   void startTimer() {
@@ -168,7 +154,8 @@ class _MainPageState extends State<MainPage> {
 
                       // Widget 4 (Gained Health)
                       infoCard(
-                        time: ' %${min((myDuration.inDays / 180 * 100).toInt(), 100)} ',
+                        time:
+                            ' %${min((myDuration.inDays / 180 * 100).toInt(), 100)} ',
                         header: 'Gained Health',
                       ),
                     ],
