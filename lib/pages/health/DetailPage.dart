@@ -7,7 +7,14 @@ class DetailPage extends StatelessWidget {
   final String subTextLast;
   final double percentage;
 
-  const DetailPage(this.text, this.time,  this.subTextFirst, this.subTextLast,this.percentage,  {super.key,});
+  const DetailPage(
+    this.text,
+    this.time,
+    this.subTextFirst,
+    this.subTextLast,
+    this.percentage, {
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +65,11 @@ class DetailPage extends StatelessWidget {
               color: Colors.grey,
             ),
             Container(height: 9),
-             Text(
+            Text(
               subTextFirst,
-              style: TextStyle(fontSize: 16, 
-              color:(percentage > 1.0) ? Colors.green : Colors.black
-              ),
+              style: TextStyle(
+                  fontSize: 16,
+                  color: (percentage > 1.0) ? Colors.green : Colors.black),
               textAlign: TextAlign.center,
             ),
             Container(height: 9),
@@ -71,11 +78,11 @@ class DetailPage extends StatelessWidget {
               color: Colors.grey,
             ),
             Container(height: 9),
-             Text(
-              subTextFirst,
-              style: TextStyle(fontSize: 16, 
-              color:(percentage > 1.0) ? Colors.green : Colors.black
-              ),
+            Text(
+              subTextLast,
+              style: TextStyle(
+                  fontSize: 16,
+                  color: (percentage > 1.0) ? Colors.green : Colors.black),
               textAlign: TextAlign.center,
             ),
             Container(height: 9),

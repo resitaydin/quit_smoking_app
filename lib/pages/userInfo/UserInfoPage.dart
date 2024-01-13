@@ -42,7 +42,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
     timeController = TextEditingController();
     if (widget.uid != null) {
       dateController.text = DateFormat('dd MM yyyy').format(
-      LocalStorageService().getLastDateSmoked(), // Fixed formatting error by updating here.
+        LocalStorageService()
+            .getLastDateSmoked(), // Fixed formatting error by updating here.
       );
       timeController.text = LocalStorageService()
           .getLastDateSmoked()
@@ -56,7 +57,23 @@ class _UserInfoPageState extends State<UserInfoPage> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
+      lastDate: DateTime.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.green, // used for the header background
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor:
+                    Colors.green, // used for the text in the dialog buttons
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null && picked != DateTime.now()) {
@@ -112,7 +129,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
     return Scaffold(
       appBar: AppBar(
         leading: widget.uid != null ? const BackButton() : null,
-        ),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -144,7 +161,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       }
 
                       return null;
-                    }, defaultValue: widget.uid != null ? LocalStorageService().getCigaratteAmountPerPack().toString() : null),
+                    },
+                        defaultValue: widget.uid != null
+                            ? LocalStorageService()
+                                .getCigaratteAmountPerPack()
+                                .toString()
+                            : null),
                     const SizedBox(
                       height: 10,
                     ),
@@ -158,7 +180,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       }
 
                       return null;
-                    }, defaultValue: widget.uid != null ? LocalStorageService().getCigaratteDailySmoked().toString() : null),
+                    },
+                        defaultValue: widget.uid != null
+                            ? LocalStorageService()
+                                .getCigaratteDailySmoked()
+                                .toString()
+                            : null),
                     const SizedBox(
                       height: 10,
                     ),
@@ -172,7 +199,10 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       }
 
                       return null;
-                    }, defaultValue: widget.uid != null ? LocalStorageService().getPricePerPack().toString() : null),
+                    },
+                        defaultValue: widget.uid != null
+                            ? LocalStorageService().getPricePerPack().toString()
+                            : null),
 
                     const SizedBox(
                       height: 20,

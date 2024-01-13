@@ -16,11 +16,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final AuthService _auth = AuthService();
 
-  DateTime lastDateSmoked = DateTime.now();
-  int cigaratte_daily_smoked = 0;
-  int cigaratte_amount_per_pack = 0;
-  int price_per_pack = 0;
-
   int current_smoke_amount = 0;
 
   Timer? countUppTimer;
@@ -36,20 +31,13 @@ class _MainPageState extends State<MainPage> {
 
     fApp.then((_) {
       LocalStorageService().setData().then((_) {
-        LocalStorageService().getData().then((data) {
-          setState(() {
-            lastDateSmoked = (data['last_date_smoked'] ?? '');
-            cigaratte_daily_smoked = data['cigaratte_daily_smoked'] ?? 0;
-            cigaratte_amount_per_pack = data['cigaratte_amount_per_pack'] ?? 0;
-            price_per_pack = data['price_per_pack'] ?? 0;
-
-            myDuration = Duration(
-                seconds: LocalStorageService().getTotalSecondsNotSmoked());
-          });
-          current_smoke_amount = LocalStorageService().calculateSmokeAmount();
-          savedMoney = LocalStorageService().calculateSavedMoney();
-          startTimer();
+        setState(() {
+          myDuration = Duration(
+              seconds: LocalStorageService().getTotalSecondsNotSmoked());
         });
+        current_smoke_amount = LocalStorageService().calculateSmokeAmount();
+        savedMoney = LocalStorageService().calculateSavedMoney();
+        startTimer();
       });
     });
   }
@@ -156,7 +144,7 @@ class _MainPageState extends State<MainPage> {
                       infoCard(
                         time:
                             ' %${min((myDuration.inDays / 180 * 100).toInt(), 100)} ',
-                        header: 'Gained Health',
+                        header: 'Regained Health',
                       ),
                     ],
                   ),
@@ -196,7 +184,7 @@ class _MainPageState extends State<MainPage> {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                fontSize: 35,
+                fontSize: 30,
               ),
             ),
           ],
@@ -257,7 +245,7 @@ class _MainPageState extends State<MainPage> {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                fontSize: 35,
+                fontSize: 30,
               ),
             ),
           ),

@@ -78,11 +78,6 @@ class _UserLoginPageState extends State<UserLoginPage> {
                     // Email and Password TextFields
                     _buildTextFields(),
 
-                    const SizedBox(height: 10),
-
-                    // Forgot Password
-                    _buildForgotPassword(),
-
                     const SizedBox(height: 25),
 
                     // Sign In Button
@@ -188,21 +183,6 @@ class _UserLoginPageState extends State<UserLoginPage> {
           },
         ),
       ],
-    );
-  }
-
-  Widget _buildForgotPassword() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            'Forgot Password?',
-            style: TextStyle(color: Colors.green),
-          ),
-        ],
-      ),
     );
   }
 

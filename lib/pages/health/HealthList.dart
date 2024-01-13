@@ -26,28 +26,31 @@ class HealthList extends StatelessWidget {
   };
 
   final _health_subtexts_first = {
-    "Your skin has begun to renew itself",
-    "Your skin has beguno renew itself",
-    "Your skin has begunto renew itself",
-    "Your skin has ben to renew itself",
-    "Yo skin has begun to renew itself",
-    "Your skins begun to renew itself",
-    "Your skin has begun trenew itself",
+    "Your sleep quality has improved.",
+    "Your respiratory function has improved.",
+    "Dizziness and weakness in your body has reduced.",
+    "Your skin has begun to renew itself.",
+    "You are more adapted to high altitude.",
+    "Your organ functions have optimized.",
+    "Your cardiovascular risk has reduced.",
   };
 
   final _health_subtexts_second = {
-    "Your skin has begun to renew itself",
-    "Your sk",
-    "Your skhas begun to renew itself",
-    "Your skinas begun to renew itself",
-    "Your s has begun to renew itself",
-    "Your sas begun to renew itself",
-    "Yourkin has begun to renew itself",
+    "Your risk to have of Peripheral Artery Disease (PAD) has reduced.",
+    "Your cognitive function has improved.",
+    "Your cadence of breathe returned to normal.",
+    "Your taste and smell functions has improved.",
+    "Your stress has reduced.",
+    "Your oxygen transport capacity increased.",
+    "Your risk to have Coronary Heart Disease (CHD) has reduced.",
   };
 
   @override
   Widget build(BuildContext context) {
     int totalMins = LocalStorageService().getTotalMinutesNotSmoked();
+    if (totalMins == 0) {
+      totalMins = 1;
+    }
 
     final times = {
       totalMins / 20, //20 dakika

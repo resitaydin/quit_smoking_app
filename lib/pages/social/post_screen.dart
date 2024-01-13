@@ -74,7 +74,7 @@ class _PostScreenState extends State<PostScreen> {
       final now = DateTime.now();
       final difference = now.difference(DateTime(now.year, now.month, now.day,
           lastMessageTime.hour, lastMessageTime.minute));
-      if (difference.inMinutes < 1) {
+      if (difference.inSeconds < 5) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -272,7 +272,7 @@ class _CommentScreenState extends State<CommentScreen> {
       final now = DateTime.now();
       final difference = now.difference(DateTime(now.year, now.month, now.day,
           lastMessageTime.hour, lastMessageTime.minute));
-      if (difference.inMinutes < 1) {
+      if (difference.inSeconds < 5) {
         showDialog(
           context: context,
           builder: (BuildContext context) {

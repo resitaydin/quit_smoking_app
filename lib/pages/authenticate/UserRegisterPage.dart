@@ -151,7 +151,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                     const SizedBox(height: 20),
 
                     UiButton(
-                      buttonName: "Login Page",
+                      buttonName: "Sign In",
                       onTap: returnLogIn,
                     ),
                     const SizedBox(height: 20),
