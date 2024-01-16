@@ -72,9 +72,8 @@ class _PostScreenState extends State<PostScreen> {
     if (LocalStorageService().loadLastMessageTime() != null) {
       final lastMessageTime = LocalStorageService().loadLastMessageTime()!;
       final now = DateTime.now();
-      final difference = now.difference(DateTime(now.year, now.month, now.day,
-          lastMessageTime.hour, lastMessageTime.minute));
-      if (difference.inSeconds < 5) {
+      final difference = now.difference(lastMessageTime);
+      if (difference.inSeconds < 7) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -96,7 +95,7 @@ class _PostScreenState extends State<PostScreen> {
       }
     }
 
-    LocalStorageService().saveLastMessageTime(TimeOfDay.now());
+    LocalStorageService().saveLastMessageTime(DateTime.now());
 
     String userId = LocalStorageService().getUid();
     String parentalId = "";
@@ -292,10 +291,8 @@ class _CommentScreenState extends State<CommentScreen> {
     if (LocalStorageService().loadLastMessageTime() != null) {
       final lastMessageTime = LocalStorageService().loadLastMessageTime()!;
       final now = DateTime.now();
-      final difference = now.difference(DateTime(now.year, now.month, now.day,
-          lastMessageTime.hour, lastMessageTime.minute));
-      if (difference.inSeconds < 5) {
-        // doesn't work because lastMessageTime doesn't have seconds property.
+      final difference = now.difference(lastMessageTime);
+      if (difference.inSeconds < 7) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -317,7 +314,7 @@ class _CommentScreenState extends State<CommentScreen> {
       }
     }
 
-    LocalStorageService().saveLastMessageTime(TimeOfDay.now());
+    LocalStorageService().saveLastMessageTime(DateTime.now());
 
     String parentalId = widget.post.uid ?? "";
     final post = Post(

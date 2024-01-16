@@ -42,12 +42,12 @@ class LocalStorageService {
   }
 
   // Save the last message time
-  void saveLastMessageTime(TimeOfDay lastMessageTime) {
+  void saveLastMessageTime(DateTime lastMessageTime) {
     _dbService.lastMessageTime = lastMessageTime;
   }
 
   // Load the last message time
-  TimeOfDay? loadLastMessageTime() {
+  DateTime? loadLastMessageTime() {
     return _dbService.lastMessageTime;
   }
 

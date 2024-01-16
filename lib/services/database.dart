@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class DatabaseService {
   // user id from firebase (taken on sign-in/register)
@@ -9,7 +8,7 @@ class DatabaseService {
   int cigaratte_daily_smoked = 0;
   int cigaratte_amount_per_pack = 0;
   int price_per_pack = 0;
-  TimeOfDay? lastMessageTime;
+  DateTime? lastMessageTime;
 
   // constructor
   DatabaseService({this.uid});
