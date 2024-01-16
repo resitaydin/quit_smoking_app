@@ -61,7 +61,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: Colors.green, // used for the header background
             ),
             textButtonTheme: TextButtonThemeData(
@@ -86,6 +86,25 @@ class _UserInfoPageState extends State<UserInfoPage> {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              onSurface: Colors.black, // used for the text on the picker
+              secondary:
+                  Color.fromARGB(255, 97, 182, 100), // used for the AM/PM text
+              primary: Colors.green, // used for the header background
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor:
+                    Colors.green, // used for the text in the dialog buttons
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null) {

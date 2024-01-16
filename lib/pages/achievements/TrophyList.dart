@@ -32,16 +32,22 @@ class TrophyList extends StatelessWidget {
       'Life regained: 60 days',
     };
 
-    final images = [
-      'assets/images/trophy_silver.jpg',
-      'assets/images/trophy_brown.jpg',
-      'assets/images/trophy.png'
-    ];
-
     final imagesRed = [
       'assets/images/red1.png',
       'assets/images/red2.png',
       'assets/images/red3.png'
+    ];
+
+    final imagesGreen = [
+      'assets/images/green1.jpeg',
+      'assets/images/green2.jpeg',
+      'assets/images/green3.jpeg'
+    ];
+
+    final imagesPurple = [
+      'assets/images/purple1.jpeg',
+      'assets/images/purple2.jpeg',
+      'assets/images/purple3.jpeg'
     ];
 
     List<Trophy> achievements = [];
@@ -51,7 +57,7 @@ class TrophyList extends StatelessWidget {
       achievements.add(
         Trophy(
           mainTexts.elementAt(index),
-          imagesRed.elementAt(index),
+          imagesGreen.elementAt(index),
           cigarettes >= levelsCigarettes[index],
         ),
       );
@@ -60,7 +66,7 @@ class TrophyList extends StatelessWidget {
       achievements.add(
         Trophy(
           mainTexts.elementAt(index + 3),
-          images.elementAt(index),
+          imagesPurple.elementAt(index),
           smokeFree >= levelsSmokeFree[index],
         ),
       );
@@ -69,7 +75,7 @@ class TrophyList extends StatelessWidget {
       achievements.add(
         Trophy(
           mainTexts.elementAt(index + 6),
-          images.elementAt(index),
+          imagesRed.elementAt(index),
           lifeGained >= levelsLifeGained[index],
         ),
       );

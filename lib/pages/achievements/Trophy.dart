@@ -44,7 +44,6 @@ class Trophy extends StatelessWidget {
                       width: 90,
                       child: CircleAvatar(
                         radius: 48, // Image radius
-                        backgroundColor: Colors.black,
                         backgroundImage: AssetImage(
                             unLocked ? image : "assets/images/trophy_gray.png"),
                       ),

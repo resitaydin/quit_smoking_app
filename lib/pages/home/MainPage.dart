@@ -86,14 +86,14 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () {
-                _auth.signOut();
-              },
-            ),
-          ],
+          // actions: <Widget>[
+          //   IconButton(
+          //     icon: const Icon(Icons.logout),
+          //     onPressed: () {
+          //       _auth.signOut();
+          //     },
+          //   ),
+          // ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(50.0),

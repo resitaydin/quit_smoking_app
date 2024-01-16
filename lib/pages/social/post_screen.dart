@@ -214,9 +214,20 @@ class _PostScreenState extends State<PostScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
                     labelText: 'Enter a post',
                     prefixIcon: Icon(Icons.message),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 25, 184, 233), width: 2.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 25, 184, 233), width: 2.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 25, 184, 233), width: 2.0),
+                    ),
                   ),
                   onSubmitted: (value) {
                     setState(() {
@@ -284,6 +295,7 @@ class _CommentScreenState extends State<CommentScreen> {
       final difference = now.difference(DateTime(now.year, now.month, now.day,
           lastMessageTime.hour, lastMessageTime.minute));
       if (difference.inSeconds < 5) {
+        // doesn't work because lastMessageTime doesn't have seconds property.
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -408,9 +420,20 @@ class _CommentScreenState extends State<CommentScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
                     labelText: 'Enter a comment',
                     prefixIcon: Icon(Icons.message),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 25, 184, 233), width: 2.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 25, 184, 233), width: 2.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 25, 184, 233), width: 2.0),
+                    ),
                   ),
                   onSubmitted: (value) {
                     setState(() {
