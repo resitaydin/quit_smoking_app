@@ -124,6 +124,30 @@ class _PostScreenState extends State<PostScreen> {
     }
   }
 
+  String getTimeAgo(DateTime time) {
+    final now = DateTime.now();
+    final duration = now.difference(time);
+
+    if (duration.inSeconds < 60) {
+      return '${duration.inSeconds} seconds ago';
+    } else if (duration.inMinutes < 60) {
+      return '${duration.inMinutes} minutes ago';
+    } else if (duration.inHours < 24) {
+      return '${duration.inHours} hours ago';
+    } else if (duration.inDays < 7) {
+      return '${duration.inDays} days ago';
+    } else if (duration.inDays < 30) {
+      final weeks = (duration.inDays / 7).floor();
+      return '$weeks ${weeks == 1 ? 'week' : 'weeks'} ago';
+    } else if (duration.inDays < 365) {
+      final months = (duration.inDays / 30).floor();
+      return '$months ${months == 1 ? 'month' : 'months'} ago';
+    } else {
+      final years = (duration.inDays / 365).floor();
+      return '$years ${years == 1 ? 'year' : 'years'} ago';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,6 +185,9 @@ class _PostScreenState extends State<PostScreen> {
                   itemCount: posts.length,
                   controller: _scrollController,
                   itemBuilder: (context, index) {
+                    final post = posts[index];
+                    String timeAgo = getTimeAgo(post.created_at);
+
                     return Card(
                       color: const Color.fromARGB(255, 255, 255, 255),
                       shadowColor: const Color.fromARGB(255, 0, 0, 0),
@@ -171,40 +198,54 @@ class _PostScreenState extends State<PostScreen> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: ListTile(
-                          title: FutureBuilder<String>(
-                            future:
-                                ChatHelper().getUserName(posts[index].user_id),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              } else if (snapshot.hasError) {
-                                return const Text('An error occurred!');
-                              }
-                              return Text(
-                                snapshot.data!,
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 25, 184, 233),
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        title: FutureBuilder<String>(
+                          future: ChatHelper().getUserName(post.user_id),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
                               );
-                            },
-                          ),
-                          subtitle: Text(posts[index].content),
-                          trailing: Text(
-                              "${comments.where((post) => post.parental_id == posts[index].uid).length} Comments"),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CommentScreen(
-                                  post: posts[index],
-                                ),
+                            } else if (snapshot.hasError) {
+                              return const Text('An error occurred!');
+                            }
+                            return Text(
+                              snapshot.data!,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 25, 184, 233),
+                                fontWeight: FontWeight.bold,
                               ),
                             );
-                          }),
+                          },
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(post.content),
+                            Text(
+                              'Sent $timeAgo',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
+                        ),
+                        trailing: Text(
+                          "${comments.where((p) => p.parental_id == post.uid).length} Comments",
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CommentScreen(
+                                post: post,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     );
                   },
                 ),
@@ -365,7 +406,28 @@ class _CommentScreenState extends State<CommentScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ListTile(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 25, 184, 233),
+                      width: 2,
+                    ),
+                  ),
+                  child: ListTile(
+                    tileColor: Colors.white, // Set tile background color
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8), // Set tile content padding
                     title: FutureBuilder<String>(
                       future: ChatHelper().getUserName(widget.post.user_id),
                       builder: (context, snapshot) {
@@ -377,31 +439,48 @@ class _CommentScreenState extends State<CommentScreen> {
                         } else if (snapshot.hasError) {
                           return const Text('An error occurred!');
                         }
-                        return Container(
-                          child: Text(
-                            snapshot.data!,
-                            style: const TextStyle(
-                                color: Color.fromARGB(255, 25, 184, 233)),
-                          ),
+                        return Text(
+                          snapshot.data!,
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 25, 184, 233)),
                         );
                       },
                     ),
-                    subtitle: Text(widget.post.content)),
+                    subtitle: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        widget.post.content,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               Expanded(
                 child: ListView.builder(
                   itemCount: comments.length,
                   itemBuilder: (context, index) {
-                    return Card(
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25), // Add horizontal padding
+                      child: Card(
                         color: const Color.fromARGB(255, 255, 255, 255),
                         shadowColor: const Color.fromARGB(255, 0, 0, 0),
                         elevation: 3,
                         surfaceTintColor:
                             const Color.fromARGB(255, 255, 255, 255),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          side: const BorderSide(
+                            color: Color.fromARGB(255, 87, 87, 87),
+                          ),
                         ),
                         child: ListTile(
+                          tileColor: const Color.fromARGB(255, 255, 255,
+                              255), // Set list item background color
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 4), // Set list item content padding
                           title: FutureBuilder<String>(
                             future: ChatHelper()
                                 .getUserName(comments[index].user_id),
@@ -417,12 +496,15 @@ class _CommentScreenState extends State<CommentScreen> {
                               return Text(
                                 snapshot.data!,
                                 style: const TextStyle(
-                                    color: Color.fromARGB(255, 25, 184, 233)),
+                                  color: Color.fromARGB(255, 25, 184, 233),
+                                ),
                               );
                             },
                           ),
                           subtitle: Text(comments[index].content),
-                        ));
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -434,15 +516,21 @@ class _CommentScreenState extends State<CommentScreen> {
                     prefixIcon: Icon(Icons.message),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Color.fromARGB(255, 25, 184, 233), width: 2.0),
+                        color: Color.fromARGB(255, 25, 184, 233),
+                        width: 2.0,
+                      ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Color.fromARGB(255, 25, 184, 233), width: 2.0),
+                        color: Color.fromARGB(255, 25, 184, 233),
+                        width: 2.0,
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Color.fromARGB(255, 25, 184, 233), width: 2.0),
+                        color: Color.fromARGB(255, 25, 184, 233),
+                        width: 2.0,
+                      ),
                     ),
                   ),
                   onSubmitted: (value) {
