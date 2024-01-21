@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:loginui/pages/social/firebase_options.dart';
-import 'package:loginui/services/auth.dart';
+//import 'package:loginui/services/auth.dart';
 import 'package:loginui/services/local_storage_service.dart';
 
 class MainPage extends StatefulWidget {
@@ -14,7 +14,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final AuthService _auth = AuthService();
+  //final AuthService _auth = AuthService();
 
   int current_smoke_amount = 0;
 

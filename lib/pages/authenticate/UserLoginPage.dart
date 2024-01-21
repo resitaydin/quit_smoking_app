@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:loginui/pages/UiComponentScripts/UiButton.dart';
 import 'package:loginui/pages/UiComponentScripts/UiTextField.dart';
 import 'package:loginui/services/auth.dart';
