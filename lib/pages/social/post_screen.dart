@@ -97,7 +97,7 @@ class _PostScreenState extends State<PostScreen> {
 
     LocalStorageService().saveLastMessageTime(DateTime.now());
 
-    String userId = LocalStorageService().getUid();
+    String userId = LocalStorageService().getUid()!;
     String parentalId = "";
     final post = Post(
       user_id: userId,
@@ -318,7 +318,7 @@ class _CommentScreenState extends State<CommentScreen> {
 
     String parentalId = widget.post.uid ?? "";
     final post = Post(
-      user_id: LocalStorageService().getUid(),
+      user_id: LocalStorageService().getUid()!,
       content: value,
       parental_id: parentalId,
       created_at: DateTime.now(),
@@ -338,9 +338,20 @@ class _CommentScreenState extends State<CommentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-            child:
-                Text('Posts', style: TextStyle(fontWeight: FontWeight.bold))),
+        title: const Text('Comments'),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                Colors.green.shade700,
+                Colors.green.shade400,
+              ],
+            ),
+          ),
+        ),
       ),
       body: FutureBuilder(
         future: fetchComments(),
@@ -366,10 +377,12 @@ class _CommentScreenState extends State<CommentScreen> {
                         } else if (snapshot.hasError) {
                           return const Text('An error occurred!');
                         }
-                        return Text(
-                          snapshot.data!,
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 25, 184, 233)),
+                        return Container(
+                          child: Text(
+                            snapshot.data!,
+                            style: const TextStyle(
+                                color: Color.fromARGB(255, 25, 184, 233)),
+                          ),
                         );
                       },
                     ),

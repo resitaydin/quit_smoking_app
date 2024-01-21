@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:loginui/pages/UiComponentScripts/UiButton.dart';
 import 'package:loginui/pages/home/navigatorBarPage.dart';
@@ -172,11 +173,16 @@ class _UserInfoPageState extends State<UserInfoPage> {
                         'cigaratte amount per pack', amountPerPacketController,
                         (String? input) {
                       if (input!.isEmpty) {
-                        return 'Cigaratte amount per pack is required!';
+                        return 'Value is required!';
                       }
 
                       if (!input.isNum) {
-                        return 'Please enter a valid data!';
+                        return 'Please enter a valid value!';
+                      }
+
+                      int value = int.tryParse(input) ?? 0;
+                      if (value <= 0) {
+                        return 'Value must be greater than 0!';
                       }
 
                       return null;
@@ -192,10 +198,14 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     textWidget('daily smoked amount', dailySmokedController,
                         (String? input) {
                       if (input!.isEmpty) {
-                        return 'Daily smoked amount is required!';
+                        return 'Value is required!';
                       }
                       if (!input.isNum) {
-                        return 'Please enter a valid data!';
+                        return 'Please enter a valid value!';
+                      }
+                      int value = int.tryParse(input) ?? 0;
+                      if (value <= 0) {
+                        return 'Value must be greater than 0!';
                       }
 
                       return null;
@@ -211,10 +221,14 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     textWidget('price per pack', pricePerPackController,
                         (String? input) {
                       if (input!.isEmpty) {
-                        return 'Price per pack is required!';
+                        return 'Value is required!';
                       }
                       if (!input.isNum) {
-                        return 'Please enter a valid data!';
+                        return 'Please enter a valid value!';
+                      }
+                      int value = int.tryParse(input) ?? 0;
+                      if (value <= 0) {
+                        return 'Value must be greater than 0!';
                       }
 
                       return null;
@@ -222,9 +236,23 @@ class _UserInfoPageState extends State<UserInfoPage> {
                         defaultValue: widget.uid != null
                             ? LocalStorageService().getPricePerPack().toString()
                             : null),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "quit date",
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xffA7A7A7),
+                        ),
+                      ),
+                    ),
 
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
 
                     InkWell(
@@ -317,7 +345,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     ),
 
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
                     UiButton(
                       buttonName: "Submit",

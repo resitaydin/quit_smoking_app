@@ -34,14 +34,14 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       // return messages depending on which
       switch (e.code.toString()) {
-        case 'invalid-email':
-          return 'Please enter a valid email';
-        case 'user-not-found':
-          return 'No user found with this email';
-        case 'wrong-password':
-          return 'Incorrect password';
-        case 'user-disabled':
+        case 'disabled-user':
           return 'Email corresponds to a disabled user';
+        case 'invalid-credential':
+          return 'The account does not exist or the password is wrong';
+        case 'invalid-email':
+          return 'Invalid email address';
+        default:
+          return 'An unknown error occurred';
       }
     } catch (e) {
       return null;
@@ -73,7 +73,7 @@ class AuthService {
         case 'weak-password':
           return 'Please use a stronger password';
         case 'operation-not-allowed':
-          return 'Email/password authentication disabled';
+          return 'Email password authentication disabled';
       }
     } catch (e) {
       return null;

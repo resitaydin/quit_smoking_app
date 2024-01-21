@@ -96,7 +96,7 @@ class _MainPageState extends State<MainPage> {
           // ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(50.0),
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
           child: Column(
             children: [
               buildTime(), // Time part
@@ -120,8 +120,9 @@ class _MainPageState extends State<MainPage> {
                   ),
                   child: GridView.count(
                     crossAxisCount: 1,
-                    childAspectRatio: 2.68,
-                    padding: const EdgeInsets.all(10.0),
+                    childAspectRatio: 2.55,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 25.0),
                     mainAxisSpacing: 6.0,
                     crossAxisSpacing: 2.0,
                     children: <Widget>[
@@ -158,7 +159,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget infoCard({required String time, required String header}) => Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
           color: Colors.green,
           borderRadius: BorderRadius.circular(20),
@@ -199,7 +200,7 @@ class _MainPageState extends State<MainPage> {
     final seconds = strDigits(myDuration.inSeconds.remainder(60));
 
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
       decoration: BoxDecoration(
         color: Colors.grey[400],
         borderRadius: BorderRadius.circular(40),
@@ -216,11 +217,11 @@ class _MainPageState extends State<MainPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           buildTimeCard(time: days, header: "DAYS"),
-          const SizedBox(width: 5),
+          const SizedBox(width: 10),
           buildTimeCard(time: hours, header: "HOURS"),
-          const SizedBox(width: 5),
+          const SizedBox(width: 10),
           buildTimeCard(time: minutes, header: "MINUTES"),
-          const SizedBox(width: 5),
+          const SizedBox(width: 10),
           buildTimeCard(time: seconds, header: "SECONDS"),
         ],
       ),

@@ -24,7 +24,7 @@ class TrophyList extends StatelessWidget {
       'Not Smoked Cigarattes: 10',
       'Not Smoked Cigarattes: 35',
       'Not Smoked Cigarattes: 100',
-      'Days without smoking: 5 days',
+      'Days without smoking:  5 days',
       'Days without smoking: 20 days',
       'Days without smoking: 60 days',
       'Life regained: 5 days',
@@ -51,8 +51,8 @@ class TrophyList extends StatelessWidget {
     ];
 
     List<Trophy> achievements = [];
-    achievements.add(const Trophy(
-        "First step is quitting smoke.", "assets/images/rocket1.png", true));
+    achievements.add(const Trophy("The first step is to quit smoking.",
+        "assets/images/rocket1.png", true));
     for (int index = 0; index < 3; index++) {
       achievements.add(
         Trophy(

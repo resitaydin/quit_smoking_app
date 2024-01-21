@@ -9,7 +9,7 @@ class HealthList extends StatelessWidget {
     'Blood pressure and pulse return to normal approximately 20 minutes after the last cigarette.',
     'Blood oxygen level returns to normal approximately 8 hours after the last cigarette.',
     'The body gets rid of carbon monoxide approximately 24 hours after the last cigarette.',
-    'Nicotine in the body is completely eliminated',
+    'Nicotine in the body is completely eliminated 48 hours after the last cigarette.',
     'Breathing returns to normal approximately 72 hours after the last cigarette.',
     'Blood circulation returns to normal approximately 2-12 weeks after the last cigarette.',
     'The risk of having a heart attack returns to normal approximately 10-15 years after the last cigarette.',

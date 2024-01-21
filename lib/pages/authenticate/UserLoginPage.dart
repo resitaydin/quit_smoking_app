@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:loginui/pages/UiComponentScripts/UiButton.dart';
 import 'package:loginui/pages/UiComponentScripts/UiTextField.dart';
 import 'package:loginui/services/auth.dart';
@@ -62,7 +63,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             backgroundColor: Colors.white,
             body: Container(
               padding:
-                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 28.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -82,7 +83,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
 
                     // Sign In Button
                     UiButton(
-                      buttonName: "Sign In",
+                      buttonName: "Sign in",
                       onTap: signUserIn,
                     ),
 
@@ -92,13 +93,15 @@ class _UserLoginPageState extends State<UserLoginPage> {
                     _buildDividerAndSignUp(),
 
                     UiButton(
-                      buttonName: "Sign Up",
+                      buttonName: "Sign up",
                       onTap: signUp,
                     ),
-
-                    Text(error,
-                        style:
-                            const TextStyle(color: Colors.red, fontSize: 14.0)),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                      child: Text(error,
+                          style: const TextStyle(
+                              color: Colors.red, fontSize: 14.0)),
+                    )
                   ],
                 ),
               ),
@@ -108,12 +111,12 @@ class _UserLoginPageState extends State<UserLoginPage> {
 
   Widget _buildLogoAndAppName() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         const Icon(
           Icons.monitor_heart_sharp,
           color: Colors.green,
-          size: 90,
+          size: 80,
         ),
         const SizedBox(
           width: 8.0,
@@ -144,28 +147,19 @@ class _UserLoginPageState extends State<UserLoginPage> {
       children: [
         UiTextField(
           controller: mailController,
-          hintText: 'Mail: bob_mark@hotmail.com',
+          hintText: 'Email',
           obscureText: false,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Email is required';
-            }
-            if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-                .hasMatch(value)) {
-              return 'Enter a valid email address';
-            }
-            return null;
-          },
-          onChanged: (value) {
-            setState(() {
-              email = value;
-            });
+          validator: (val) => val!.isEmpty
+              ? 'Email is required'
+              : null, // use to check if valid input
+          onChanged: (val) {
+            setState(() => email = val);
           },
         ),
         const SizedBox(height: 10),
         UiTextField(
           controller: passwordController,
-          hintText: 'Password: 123dort',
+          hintText: 'Password',
           obscureText: true,
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -200,7 +194,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: Text(
-              'If you are new, join us with your mail',
+              'If you are new, join us with your email',
               style: TextStyle(color: Colors.green),
             ),
           ),

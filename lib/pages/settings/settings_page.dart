@@ -80,7 +80,7 @@ class SettingsPage extends StatelessWidget {
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.refresh, color: Colors.black),
                     label: const Text(
-                      'I Smoked Again',
+                      'I Smoked, Restart',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14, // Increase the font size

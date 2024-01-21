@@ -37,23 +37,25 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
   // sign user in method
   void register() async {
     AuthService.isSignUp = true;
-    setState(() => loading = true);
+    if (_formKey.currentState!.validate()) {
+      setState(() => loading = true);
 
-    dynamic result =
-        await _auth.registerWithEmailAndPassword(email, password, username);
+      dynamic result =
+          await _auth.registerWithEmailAndPassword(email, password, username);
 
-    if (result is String) {
-      setState(() => {
-            error = result,
-            loading = false,
-          });
-    } else if (result == null) {
-      setState(() => {
-            error = 'Authentication error',
-            loading = false,
-          });
-    } else {
-      LocalStorageService().setData();
+      if (result is String) {
+        setState(() => {
+              error = result,
+              loading = false,
+            });
+      } else if (result == null) {
+        setState(() => {
+              error = 'Authentication error',
+              loading = false,
+            });
+      } else {
+        LocalStorageService().setData();
+      }
     }
   }
 
@@ -72,7 +74,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
             backgroundColor: Colors.white,
             body: Container(
               padding:
-                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 28.0),
               // sign in button
               child: Form(
                 key: _formKey,
@@ -103,10 +105,34 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                     // username textfield
                     UiTextField(
                       controller: usernameController,
-                      hintText: 'Username: Bob Mark',
+                      hintText: 'Username',
                       obscureText: false,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Username is required';
+                        }
+                        if (value.length < 3) {
+                          return 'Username must be at least 3 characters long';
+                        }
+                        return null;
+                      },
                       onChanged: (val) {
                         setState(() => username = val);
+                      },
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    // email textfield
+                    UiTextField(
+                      controller: mailController,
+                      hintText: 'Email',
+                      obscureText: false,
+                      validator: (val) => val!.isEmpty
+                          ? 'Email is required'
+                          : null, // use to check if valid input
+                      onChanged: (val) {
+                        setState(() => email = val);
                       },
                     ),
 
@@ -115,43 +141,34 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                     // password textfield
                     UiTextField(
                       controller: passwordController,
-                      hintText: 'Password: 123dort',
+                      hintText: 'Password',
                       obscureText: true,
-                      validator: (val) => val!.length < 6
-                          ? 'Password must be at least 6 characters long'
-                          : null,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password is required';
+                        }
+                        if (value.length < 6) {
+                          return 'Password must be at least 6 characters long';
+                        }
+                        return null;
+                      },
                       onChanged: (val) {
                         setState(() => password = val);
                       },
                     ),
 
-                    const SizedBox(height: 10),
-
-                    // username textfield
-                    UiTextField(
-                      controller: mailController,
-                      hintText: 'mail: bob_mark@hotmail.com',
-                      obscureText: false,
-                      validator: (val) => val!.isEmpty
-                          ? 'Please enter a valid email'
-                          : null, // use to check if valid input
-                      onChanged: (val) {
-                        setState(() => email = val);
-                      },
-                    ),
-
                     const SizedBox(height: 25),
 
-                    // sign in button
+                    // register button
                     UiButton(
                       buttonName: "Register",
                       onTap: register,
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 18),
 
                     UiButton(
-                      buttonName: "Sign In",
+                      buttonName: "Sign in",
                       onTap: returnLogIn,
                     ),
                     const SizedBox(height: 20),

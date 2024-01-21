@@ -96,8 +96,8 @@ class LocalStorageService {
     return totalDays;
   }
 
-  String getUid() {
-    return user!.uid;
+  String? getUid() {
+    return user?.uid;
   }
 
   factory LocalStorageService() {
