@@ -96,7 +96,7 @@ class _MainPageState extends State<MainPage> {
           // ],
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
           child: Column(
             children: [
               buildTime(), // Time part
@@ -122,7 +122,7 @@ class _MainPageState extends State<MainPage> {
                     crossAxisCount: 1,
                     childAspectRatio: 2.55,
                     padding: const EdgeInsets.symmetric(
-                        vertical: 15.0, horizontal: 25.0),
+                        vertical: 0.0, horizontal: 23.0),
                     mainAxisSpacing: 6.0,
                     crossAxisSpacing: 2.0,
                     children: <Widget>[
@@ -159,7 +159,6 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget infoCard({required String time, required String header}) => Container(
-        padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
           color: Colors.green,
           borderRadius: BorderRadius.circular(20),
@@ -179,13 +178,12 @@ class _MainPageState extends State<MainPage> {
                 fontSize: 18,
               ),
             ),
-            const SizedBox(height: 0),
             Text(
               time,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                fontSize: 30,
+                fontSize: 23,
               ),
             ),
           ],
@@ -200,7 +198,7 @@ class _MainPageState extends State<MainPage> {
     final seconds = strDigits(myDuration.inSeconds.remainder(60));
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
       decoration: BoxDecoration(
         color: Colors.grey[400],
         borderRadius: BorderRadius.circular(40),
