@@ -1,6 +1,12 @@
 # Quit Smoking App Flutter
 
-# author: TheCodeFather Software Team
+# authors:
+# Reşit Aydın
+# Özcan Akay
+# Ahmed Sait Bilen
+# Ahmet Hakan
+# Abdurrahman Ahmet Daştan
+
 
 ## Getting Started
 
