@@ -1,14 +1,15 @@
 # Quit Smoking App Flutter
 
 # authors:
-# Reşit Aydın
-# Özcan Akay
-# Ahmed Sait Bilen
-# Ahmet Hakan
-# Abdurrahman Ahmet Daştan
+
+Reşit Aydın
+Özcan Akay
+Ahmed Sait Bilen
+Ahmet Hakan
+Abdurrahman Ahmet Daştan
 
 
-## Getting Started
+# Getting Started
 
 - flutter pub get
 - flutter pub outdated
